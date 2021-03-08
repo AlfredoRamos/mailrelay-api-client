@@ -49,6 +49,7 @@ class Client {
 	}
 
 	public function api(string $name = '', PagerInterface $pager = null) {
+		$name = trim($name, " \n\r\t\v\0\/");
 		$apiClass = ucwords($name, '_');
 		$apiClass = str_replace('_', '', $apiClass);
 		$apiClass = 'AlfredoRamos\\Mailrelay\\Api\\' . $apiClass;

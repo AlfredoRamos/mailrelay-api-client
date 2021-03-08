@@ -55,11 +55,6 @@ class AbTests extends AbstractApi {
 	}
 
 	public function choose(int $itemId = 0, $data = []) {
-		return $this->post(
-			sprintf('ab_tests/%d/choose_winning_combination', $itemId),
-			$data
-		);
-
 		if (!is_array($data)) {
 			throw new \InvalidArgumentException('Invalid data to choose A/B test winning combination.');
 		}

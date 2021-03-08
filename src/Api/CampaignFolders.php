@@ -46,8 +46,8 @@ class CampaignFolders extends AbstractApi {
 	}
 
 	public function updateFolder(int $itemId = 0, $data = []) {
-		return $this->patch(s
-			printf('campaign_folders/%d', $itemId),
+		return $this->patch(
+			sprintf('campaign_folders/%d', $itemId),
 			['json' => $data]
 		);
 	}

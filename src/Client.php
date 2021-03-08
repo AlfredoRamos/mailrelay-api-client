@@ -11,6 +11,7 @@
 namespace AlfredoRamos\Mailrelay;
 
 use AlfredoRamos\Mailrelay\Http\Client as HttpClient;
+use AlfredoRamos\Mailrelay\Pager\PagerInterface;
 use AlfredoRamos\Mailrelay\Utils\Str;
 
 class Client {
@@ -47,13 +48,13 @@ class Client {
 		}
 	}
 
-	public function api(string $name = '') {
+	public function api(string $name = '', PagerInterface $pager = null) {
 		$apiClass = ucwords($name, '_');
 		$apiClass = str_replace('_', '', $apiClass);
 		$apiClass = 'AlfredoRamos\\Mailrelay\\Api\\' . $apiClass;
 
 		if (class_exists($apiClass)) {
-			return new $apiClass($this);
+			return new $apiClass($this, $pager);
 		}
 
 		throw new \InvalidArgumentException('The requested API method is not supported or has not been implemented: ' . $apiClass);

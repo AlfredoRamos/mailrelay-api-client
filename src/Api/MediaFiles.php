@@ -51,7 +51,7 @@ class MediaFiles extends AbstractApi {
 		}
 
 		if (!empty($invalid)) {
-			throw new \InvalidArgumentException('Missing required data to add a new A/B test: ' . implode(', ', $invalid));
+			throw new \InvalidArgumentException('Missing required data to add a new media file: ' . implode(', ', $invalid));
 		}
 
 		return $this->post('media_files', ['json' => $data]);

@@ -9,3 +9,9 @@
  */
 
 namespace AlfredoRamos\Mailrelay\Api;
+
+class SmtpTags extends AbstractApi {
+	public function getList() {
+		return $this->get('smtp_tags');
+	}
+}

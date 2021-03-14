@@ -12,7 +12,7 @@ namespace AlfredoRamos\Mailrelay\Api;
 
 class Subscribers extends AbstractApi {
 	public function getList() {
-		return $this->get('subscribers');
+		return $this->request->get('subscribers');
 	}
 
 	public function addNew($data = []) {
@@ -37,15 +37,15 @@ class Subscribers extends AbstractApi {
 			throw new \InvalidArgumentException('Missing required data to add a new subscriber: ' . implode(', ', $invalid));
 		}
 
-		return $this->post('subscribers', ['json' => $data]);
+		return $this->request->post('subscribers', ['json' => $data]);
 	}
 
 	public function getInfo(int $itemId = 0) {
-		return $this->get(sprintf('subscribers/%d', $itemId));
+		return $this->request->get(sprintf('subscribers/%d', $itemId));
 	}
 
 	public function deleteSubscriber(int $itemId = 0) {
-		return $this->delete(sprintf('subscribers/%d', $itemId));
+		return $this->request->delete(sprintf('subscribers/%d', $itemId));
 	}
 
 	public function updateSubscriber(int $itemId = 0, $data = []) {
@@ -53,30 +53,30 @@ class Subscribers extends AbstractApi {
 			throw new \InvalidArgumentException('Invalid data to update subscriber.');
 		}
 
-		return $this->patch(
+		return $this->request->patch(
 			sprintf('subscribers/%d', $itemId),
 			['json' => $data]
 		);
 	}
 
 	public function banSubscriber(int $itemId = 0, $data = []) {
-		return $this->patch(sprintf('subscribers/%d/ban', $itemId));
+		return $this->request->patch(sprintf('subscribers/%d/ban', $itemId));
 	}
 
 	public function resendConfirmation(int $itemId = 0) {
-		return $this->post(sprintf('subscribers/%d/resend_confirmation_email', $itemId));
+		return $this->request->post(sprintf('subscribers/%d/resend_confirmation_email', $itemId));
 	}
 
 	public function restoreSubscriber(int $itemId = 0) {
-		return $this->patch(sprintf('subscribers/%d/restore', $itemId));
+		return $this->request->patch(sprintf('subscribers/%d/restore', $itemId));
 	}
 
 	public function unbanSubscriber(int $itemId = 0) {
-		return $this->patch(sprintf('subscribers/%d/unban', $itemId));
+		return $this->request->patch(sprintf('subscribers/%d/unban', $itemId));
 	}
 
 	public function getDeleted() {
-		return $this->get('subscribers/deleted');
+		return $this->request->get('subscribers/deleted');
 	}
 
 	public function sync($data = []) {
@@ -101,6 +101,6 @@ class Subscribers extends AbstractApi {
 			throw new \InvalidArgumentException('Missing required data to sync subscriber: ' . implode(', ', $invalid));
 		}
 
-		return $this->post('subscribers/sync', ['json' => $data]);
+		return $this->request->post('subscribers/sync', ['json' => $data]);
 	}
 }

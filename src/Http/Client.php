@@ -10,6 +10,7 @@
 
 namespace AlfredoRamos\Mailrelay\Http;
 
+use AlfredoRamos\Mailrelay\Http\RequestInterface as HttpRequestInterface;
 use AlfredoRamos\Mailrelay\Middleware\Auth as AuthMiddleware;
 use AlfredoRamos\Mailrelay\Middleware\Error as ErrorMiddleware;
 use GuzzleHttp\Client as GuzzleClient;
@@ -17,11 +18,9 @@ use GuzzleHttp\HandlerStack;
 use GuzzleHttp\Middleware;
 use Psr\Http\Message\RequestInterface;
 
-class Client implements ClientInterface {
+class Client implements HttpRequestInterface, ClientInterface {
 	protected $options = [];
-
 	protected $client;
-
 	protected $stack;
 
 	public function __construct(array $options = []) {
@@ -34,7 +33,7 @@ class Client implements ClientInterface {
 			return (new AuthMiddleware($token))->addAuthHeader($request);
 		}));
 
-		if (!isset($this->client)) {
+		if (empty($this->client)) {
 			$this->client = new GuzzleClient([
 				'base_uri' => sprintf(
 					'https://%s.ipzmarketing.com/api/v1/',

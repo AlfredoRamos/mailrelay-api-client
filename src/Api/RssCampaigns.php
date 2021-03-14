@@ -12,7 +12,7 @@ namespace AlfredoRamos\Mailrelay\Api;
 
 class RssCampaigns extends AbstractApi {
 	public function getList() {
-		return $this->get('rss_campaigns');
+		return $this->request->get('rss_campaigns');
 	}
 
 	public function addNew($data = []) {
@@ -42,15 +42,15 @@ class RssCampaigns extends AbstractApi {
 			throw new \InvalidArgumentException('Missing required data to add a new RSS campaign: ' . implode(', ', $invalid));
 		}
 
-		return $this->post('rss_campaigns', ['json' => $data]);
+		return $this->request->post('rss_campaigns', ['json' => $data]);
 	}
 
 	public function getInfo(int $itemId = 0) {
-		return $this->get(sprintf('rss_campaigns/%d', $itemId));
+		return $this->request->get(sprintf('rss_campaigns/%d', $itemId));
 	}
 
 	public function deleteCampaign(int $itemId = 0) {
-		return $this->delete(sprintf('rss_campaigns/%d', $itemId));
+		return $this->request->delete(sprintf('rss_campaigns/%d', $itemId));
 	}
 
 	public function updateCampaign(int $itemId = 0, $data = []) {
@@ -58,13 +58,13 @@ class RssCampaigns extends AbstractApi {
 			throw new \InvalidArgumentException('Invalid data to update RSS campaign.');
 		}
 
-		return $this->patch(
+		return $this->request->patch(
 			sprintf('rss_campaigns/%d', $itemId),
 			['json' => $data]
 		);
 	}
 
 	public function getProcessed(int $itemId = 0) {
-		return $this->get(sprintf('rss_campaigns/%d/processed_entries', $itemId));
+		return $this->request->get(sprintf('rss_campaigns/%d/processed_entries', $itemId));
 	}
 }

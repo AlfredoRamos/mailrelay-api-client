@@ -12,7 +12,7 @@ namespace AlfredoRamos\Mailrelay\Api;
 
 class CampaignFolders extends AbstractApi {
 	public function getList() {
-		return $this->get('campaign_folders');
+		return $this->request->get('campaign_folders');
 	}
 
 	public function addFolder($data = []) {
@@ -34,19 +34,19 @@ class CampaignFolders extends AbstractApi {
 			throw new \InvalidArgumentException('Missing required data to add a new campaign folder: ' . implode(', ', $invalid));
 		}
 
-		return $this->post('campaign_folders', ['json' => $data]);
+		return $this->request->post('campaign_folders', ['json' => $data]);
 	}
 
 	public function getInfo(int $itemId = 0) {
-		return $this->get(sprintf('campaign_folders/%d', $itemId));
+		return $this->request->get(sprintf('campaign_folders/%d', $itemId));
 	}
 
 	public function deleteFolder(int $itemId = 0) {
-		return $this->delete(sprintf('campaign_folders/%d', $itemId));
+		return $this->request->delete(sprintf('campaign_folders/%d', $itemId));
 	}
 
 	public function updateFolder(int $itemId = 0, $data = []) {
-		return $this->patch(
+		return $this->request->patch(
 			sprintf('campaign_folders/%d', $itemId),
 			['json' => $data]
 		);

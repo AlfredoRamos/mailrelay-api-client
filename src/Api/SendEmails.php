@@ -73,6 +73,6 @@ class SendEmails extends AbstractApi {
 			}
 		}
 
-		return $this->post('send_emails', ['json' => $data]);
+		return $this->request->post('send_emails', ['json' => $data]);
 	}
 }

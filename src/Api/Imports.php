@@ -12,7 +12,7 @@ namespace AlfredoRamos\Mailrelay\Api;
 
 class Imports extends AbstractApi {
 	public function getList() {
-		return $this->get('imports');
+		return $this->request->get('imports');
 	}
 
 	public function addNew($data = []) {
@@ -55,18 +55,18 @@ class Imports extends AbstractApi {
 			throw new \InvalidArgumentException('Missing required data to add a new import: ' . implode(', ', $invalid));
 		}
 
-		return $this->post('imports', ['json' => $data]);
+		return $this->request->post('imports', ['json' => $data]);
 	}
 
 	public function getInfo(int $itemId = 0) {
-		return $this->get(sprintf('imports/%d', $itemId));
+		return $this->request->get(sprintf('imports/%d', $itemId));
 	}
 
 	public function cancelImport(int $itemId = 0) {
-		return $this->patch(sprintf('imports/%d/cancel', $itemId));
+		return $this->request->patch(sprintf('imports/%d/cancel', $itemId));
 	}
 
 	public function getContents(int $itemId = 0) {
-		return $this->get(sprintf('imports/%d/data', $itemId));
+		return $this->request->get(sprintf('imports/%d/data', $itemId));
 	}
 }

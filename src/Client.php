@@ -10,7 +10,6 @@
 
 namespace AlfredoRamos\Mailrelay;
 
-use AlfredoRamos\Mailrelay\Http\Client as HttpClient;
 use AlfredoRamos\Mailrelay\Pager\PagerInterface;
 use AlfredoRamos\Mailrelay\Utils\Str;
 
@@ -19,8 +18,6 @@ class Client {
 		'api_account' => '',
 		'api_token' => ''
 	];
-
-	private $httpClient;
 
 	public function __construct(array $options = []) {
 		$missing = [];
@@ -65,11 +62,7 @@ class Client {
 		throw new \InvalidArgumentException('The requested API method is not supported or has not been implemented: ' . $apiClass);
 	}
 
-	public function getHttpClient() {
-		if (!isset($this->httpClient)) {
-			$this->httpClient = new HttpClient($this->options);
-		}
-
-		return $this->httpClient;
+	public function getOptions() {
+		return $this->options;
 	}
 }

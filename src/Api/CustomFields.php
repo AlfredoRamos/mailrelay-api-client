@@ -12,7 +12,7 @@ namespace AlfredoRamos\Mailrelay\Api;
 
 class CustomFields extends AbstractApi {
 	public function getList() {
-		return $this->get('custom_fields');
+		return $this->request->get('custom_fields');
 	}
 
 	public function addNew($data = []) {
@@ -38,15 +38,15 @@ class CustomFields extends AbstractApi {
 			throw new \InvalidArgumentException('Missing required data to add a new custom field: ' . implode(', ', $invalid));
 		}
 
-		return $this->post('custom_fields', ['json' => $data]);
+		return $this->request->post('custom_fields', ['json' => $data]);
 	}
 
 	public function getInfo(int $itemId = 0) {
-		return $this->get(sprintf('custom_fields/%d', $itemId));
+		return $this->request->get(sprintf('custom_fields/%d', $itemId));
 	}
 
 	public function deleteCustomField(int $itemId = 0) {
-		return $this->delete(sprintf('custom_fields/%d', $itemId));
+		return $this->request->delete(sprintf('custom_fields/%d', $itemId));
 	}
 
 	public function updateCustomField(int $itemId = 0, $data = []) {
@@ -54,7 +54,7 @@ class CustomFields extends AbstractApi {
 			throw new \InvalidArgumentException('Invalid data to update custom field.');
 		}
 
-		return $this->patch(
+		return $this->request->patch(
 			sprintf('custom_fields/%d', $itemId),
 			['json' => $data]
 		);

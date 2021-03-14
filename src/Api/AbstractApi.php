@@ -11,44 +11,17 @@
 namespace AlfredoRamos\Mailrelay\Api;
 
 use AlfredoRamos\Mailrelay\Client;
+use AlfredoRamos\Mailrelay\Http\Request;
 
 abstract class AbstractApi {
-	protected $client;
-	protected $pager;
-	protected $httpClient;
+	protected $request;
 
 	public function __construct(Client $client, PagerInterface $pager = null) {
-		$this->client = $client;
-		$this->pager = $pager;
-		$this->httpClient = $this->client->getHttpClient();
-	}
-
-	public function get(string $url = '', array $parameters = []) {
-		if (!empty($this->pager)) {
-			$parameters['page'] = $this->pager->getPage();
-			$parameters['per_page'] = $this->pager->getResultsPerPage();
+		if (empty($this->request)) {
+			$this->request = new Request(
+				$client->getOptions(),
+				$pager
+			);
 		}
-
-		$response = $this->httpClient->get($url, ['query' => $parameters]);
-
-		return $this->httpClient->parseResponse($response);
-	}
-
-	public function post(string $url = '', array $parameters = []) {
-		$response = $this->httpClient->post($url, $parameters);
-
-		return $this->httpClient->parseResponse($response);
-	}
-
-	public function patch(string $url = '', array $parameters = []) {
-		$response = $this->httpClient->patch($url, $parameters);
-
-		return $this->httpClient->parseResponse($response);
-	}
-
-	public function delete(string $url = '', array $parameters = []) {
-		$response = $this->httpClient->delete($url, $parameters);
-
-		return $this->httpClient->parseResponse($response);
 	}
 }

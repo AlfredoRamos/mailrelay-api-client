@@ -12,7 +12,7 @@ namespace AlfredoRamos\Mailrelay\Api;
 
 class AbTests extends AbstractApi {
 	public function getList() {
-		return $this->get('ab_tests');
+		return $this->request->get('ab_tests');
 	}
 
 	public function addNew($data = []) {
@@ -39,19 +39,19 @@ class AbTests extends AbstractApi {
 			throw new \InvalidArgumentException('Missing required data to add a new A/B test: ' . implode(', ', $invalid));
 		}
 
-		return $this->post('ab_tests', ['json' => $data]);
+		return $this->request->post('ab_tests', ['json' => $data]);
 	}
 
 	public function getInfo(int $itemId = 0) {
-		return $this->get(sprintf('ab_tests/%d', $itemId));
+		return $this->request->get(sprintf('ab_tests/%d', $itemId));
 	}
 
 	public function deleteTest(int $itemId = 0) {
-		return $this->delete(sprintf('ab_tests/%d', $itemId));
+		return $this->request->delete(sprintf('ab_tests/%d', $itemId));
 	}
 
 	public function cancelTest(int $itemId = 0) {
-		return $this->patch(sprintf('ab_tests/%d/cancel', $itemId));
+		return $this->request->patch(sprintf('ab_tests/%d/cancel', $itemId));
 	}
 
 	public function choose(int $itemId = 0, $data = []) {
@@ -73,13 +73,13 @@ class AbTests extends AbstractApi {
 			throw new \InvalidArgumentException('Missing required data to choose A/B test winning combination: ' . implode(', ', $invalid));
 		}
 
-		return $this->post(
+		return $this->request->post(
 			sprintf('ab_tests/%d/choose_winning_combination', $itemId),
 			['json' => $data]
 		);
 	}
 
 	public function setManual(int $itemId = 0) {
-		return $this->patch(sprintf('ab_tests/%d/set_as_manual', $itemId));
+		return $this->request->patch(sprintf('ab_tests/%d/set_as_manual', $itemId));
 	}
 }

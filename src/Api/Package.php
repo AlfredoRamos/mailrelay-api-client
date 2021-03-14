@@ -12,6 +12,6 @@ namespace AlfredoRamos\Mailrelay\Api;
 
 class Package extends AbstractApi {
 	public function getInfo() {
-		return $this->get('package');
+		return $this->request->get('package');
 	}
 }

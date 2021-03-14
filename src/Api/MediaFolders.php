@@ -12,7 +12,7 @@ namespace AlfredoRamos\Mailrelay\Api;
 
 class MediaFolders extends AbstractApi {
 	public function getList() {
-		return $this->get('media_folders');
+		return $this->request->get('media_folders');
 	}
 
 	public function addNew($data = []) {
@@ -34,15 +34,15 @@ class MediaFolders extends AbstractApi {
 			throw new \InvalidArgumentException('Missing required data to add a new media folder: ' . implode(', ', $invalid));
 		}
 
-		return $this->post('media_folders', ['json' => $data]);
+		return $this->request->post('media_folders', ['json' => $data]);
 	}
 
 	public function getInfo(int $itemId = 0) {
-		return $this->get(sprintf('media_folders/%d', $itemId));
+		return $this->request->get(sprintf('media_folders/%d', $itemId));
 	}
 
 	public function deleteMediaFolder(int $itemId = 0) {
-		return $this->delete(sprintf('media_folders/%d', $itemId));
+		return $this->request->delete(sprintf('media_folders/%d', $itemId));
 	}
 
 	public function updateMediaFolder(int $itemId = 0, $data = []) {
@@ -50,7 +50,7 @@ class MediaFolders extends AbstractApi {
 			throw new \InvalidArgumentException('Invalid data to update media folder.');
 		}
 
-		return $this->patch(
+		return $this->request->patch(
 			sprintf('media_folders/%d', $itemId),
 			['json' => $data]
 		);

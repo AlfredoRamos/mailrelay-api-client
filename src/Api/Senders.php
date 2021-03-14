@@ -12,7 +12,7 @@ namespace AlfredoRamos\Mailrelay\Api;
 
 class Senders extends AbstractApi {
 	public function getList() {
-		return $this->get('senders');
+		return $this->request->get('senders');
 	}
 
 	public function addNew($data = []) {
@@ -37,15 +37,15 @@ class Senders extends AbstractApi {
 			throw new \InvalidArgumentException('Missing required data to add a new sender: ' . implode(', ', $invalid));
 		}
 
-		return $this->post('senders', ['json' => $data]);
+		return $this->request->post('senders', ['json' => $data]);
 	}
 
 	public function getInfo(int $itemId = 0) {
-		return $this->get(sprintf('senders/%d', $itemId));
+		return $this->request->get(sprintf('senders/%d', $itemId));
 	}
 
 	public function deleteSender(int $itemId = 0) {
-		return $this->delete(sprintf('senders/%d', $itemId));
+		return $this->request->delete(sprintf('senders/%d', $itemId));
 	}
 
 	public function updateSender(int $itemId = 0, $data = []) {
@@ -53,7 +53,7 @@ class Senders extends AbstractApi {
 			throw new \InvalidArgumentException('Invalid data to add a new sender.');
 		}
 
-		return $this->patch(
+		return $this->request->patch(
 			sprintf('senders/%d', $itemId),
 			['json' => $data]
 		);
@@ -64,6 +64,6 @@ class Senders extends AbstractApi {
 			throw new \InvalidArgumentException('Invalid data to add a new sender.');
 		}
 
-		return $this->post(sprintf('senders/%d/send_confirmation_email', $itemId));
+		return $this->request->post(sprintf('senders/%d/send_confirmation_email', $itemId));
 	}
 }

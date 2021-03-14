@@ -12,7 +12,7 @@ namespace AlfredoRamos\Mailrelay\Api;
 
 class UnsubscribeEvents extends AbstractApi {
 	public function getList() {
-		return $this->get('unsubscribe_events');
+		return $this->request->get('unsubscribe_events');
 	}
 
 	public function addNew($data = []) {
@@ -34,14 +34,14 @@ class UnsubscribeEvents extends AbstractApi {
 			throw new \InvalidArgumentException('Missing required data to add a new unsubscribe event: ' . implode(', ', $invalid));
 		}
 
-		return $this->post('unsubscribe_events', ['json' => $data]);
+		return $this->request->post('unsubscribe_events', ['json' => $data]);
 	}
 
 	public function getInfo(int $itemId = 0) {
-		return $this->get(sprintf('unsubscribe_events/%d', $itemId));
+		return $this->request->get(sprintf('unsubscribe_events/%d', $itemId));
 	}
 
 	public function deleteEvent(int $itemId = 0) {
-		return $this->delete(sprintf('unsubscribe_events/%d', $itemId));
+		return $this->request->delete(sprintf('unsubscribe_events/%d', $itemId));
 	}
 }

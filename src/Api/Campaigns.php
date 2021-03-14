@@ -12,7 +12,7 @@ namespace AlfredoRamos\Mailrelay\Api;
 
 class Campaigns extends AbstractApi {
 	public function getList() {
-		return $this->get('campaigns');
+		return $this->request->get('campaigns');
 	}
 
 	public function addNew($data = []) {
@@ -39,15 +39,15 @@ class Campaigns extends AbstractApi {
 			throw new \InvalidArgumentException('Missing required data to add a new campaign: ' . implode(', ', $invalid));
 		}
 
-		return $this->post('campaigns', ['json' => $data]);
+		return $this->request->post('campaigns', ['json' => $data]);
 	}
 
 	public function getInfo(int $itemId = 0) {
-		return $this->get(sprintf('campaigns/%d', $itemId));
+		return $this->request->get(sprintf('campaigns/%d', $itemId));
 	}
 
 	public function deleteCampaign(int $itemId = 0) {
-		return $this->delete(sprintf('campaigns/%d', $itemId));
+		return $this->request->delete(sprintf('campaigns/%d', $itemId));
 	}
 
 	public function updateCampaign(int $itemId = 0, $data = []) {
@@ -55,7 +55,7 @@ class Campaigns extends AbstractApi {
 			throw new \InvalidArgumentException('Invalid data to update campaign.');
 		}
 
-		return $this->patch(
+		return $this->request->patch(
 			sprintf('campaigns/%d', $itemId),
 			['json' => $data]
 		);
@@ -80,7 +80,7 @@ class Campaigns extends AbstractApi {
 			throw new \InvalidArgumentException('Missing required data to send campaign: ' . implode(', ', $invalid));
 		}
 
-		return $this->post(
+		return $this->request->post(
 			sprintf('campaigns/%d/send_all', $itemId),
 			['json' => $data]
 		);
@@ -105,7 +105,7 @@ class Campaigns extends AbstractApi {
 			throw new \InvalidArgumentException('Missing required data to send test campaign: ' . implode(', ', $invalid));
 		}
 
-		return $this->post(
+		return $this->request->post(
 			sprintf('campaigns/%d/send_test', $itemId),
 			['json' => $data]
 		);

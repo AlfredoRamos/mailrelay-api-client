@@ -12,7 +12,7 @@ namespace AlfredoRamos\Mailrelay\Api;
 
 class ApiBatches extends AbstractApi {
 	public function getList() {
-		return $this->get('api_batches');
+		return $this->request->get('api_batches');
 	}
 
 	public function addNew($data = []) {
@@ -54,10 +54,10 @@ class ApiBatches extends AbstractApi {
 			throw new \InvalidArgumentException('Missing required data to add a new API batch: ' . implode(', ', $invalid));
 		}
 
-		return $this->post('api_batches', ['json' => $data]);
+		return $this->request->post('api_batches', ['json' => $data]);
 	}
 
 	public function getInfo(int $itemId = 0) {
-		return $this->get(sprintf('api_batches/%d', $itemId));
+		return $this->request->get(sprintf('api_batches/%d', $itemId));
 	}
 }

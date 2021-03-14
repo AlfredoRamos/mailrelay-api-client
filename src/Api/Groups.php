@@ -12,7 +12,7 @@ namespace AlfredoRamos\Mailrelay\Api;
 
 class Groups extends AbstractApi {
 	public function getList() {
-		return $this->get('groups');
+		return $this->request->get('groups');
 	}
 
 	public function addNew($data = []) {
@@ -34,15 +34,15 @@ class Groups extends AbstractApi {
 			throw new \InvalidArgumentException('Missing required data to add a new group: ' . implode(', ', $invalid));
 		}
 
-		return $this->post('groups', ['json' => $data]);
+		return $this->request->post('groups', ['json' => $data]);
 	}
 
 	public function getInfo(int $itemId = 0) {
-		return $this->get(sprintf('groups/%d', $itemId));
+		return $this->request->get(sprintf('groups/%d', $itemId));
 	}
 
 	public function deleteGroup(int $itemId = 0) {
-		return $this->delete(sprintf('groups/%d', $itemId));
+		return $this->request->delete(sprintf('groups/%d', $itemId));
 	}
 
 	public function updateGroup(int $itemId = 0, $data = []) {
@@ -50,7 +50,7 @@ class Groups extends AbstractApi {
 			throw new \InvalidArgumentException('Invalid data to update group.');
 		}
 
-		return $this->patch(
+		return $this->request->patch(
 			sprintf('groups/%d', $itemId),
 			['json' => $data]
 		);

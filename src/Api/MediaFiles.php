@@ -12,7 +12,7 @@ namespace AlfredoRamos\Mailrelay\Api;
 
 class MediaFiles extends AbstractApi {
 	public function getList() {
-		return $this->get('media_files');
+		return $this->request->get('media_files');
 	}
 
 	public function addNew($data = []) {
@@ -54,26 +54,26 @@ class MediaFiles extends AbstractApi {
 			throw new \InvalidArgumentException('Missing required data to add a new media file: ' . implode(', ', $invalid));
 		}
 
-		return $this->post('media_files', ['json' => $data]);
+		return $this->request->post('media_files', ['json' => $data]);
 	}
 
 	public function getInfo(int $itemId = 0) {
-		return $this->get(sprintf('media_files/%d', $itemId));
+		return $this->request->get(sprintf('media_files/%d', $itemId));
 	}
 
 	public function deleteMediaFile(int $itemId = 0) {
-		return $this->delete(sprintf('media_files/%d', $itemId));
+		return $this->request->delete(sprintf('media_files/%d', $itemId));
 	}
 
 	public function moveToTrash(int $itemId = 0) {
-		return $this->patch(sprintf('media_files/%d/move_to_trash', $itemId));
+		return $this->request->patch(sprintf('media_files/%d/move_to_trash', $itemId));
 	}
 
 	public function restore(int $itemId = 0) {
-		return $this->patch(sprintf('media_files/%d/restore', $itemId));
+		return $this->request->patch(sprintf('media_files/%d/restore', $itemId));
 	}
 
 	public function trashed() {
-		return $this->get('media_files/trashed');
+		return $this->request->get('media_files/trashed');
 	}
 }

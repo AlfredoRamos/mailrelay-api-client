@@ -12,6 +12,7 @@ namespace AlfredoRamos\Mailrelay\Api;
 
 class SendEmails extends AbstractApi {
 	public function send(array $data = []) {
+		$data = $this->sanitize->sanitizeEmailHeaders($data);
 		$this->validator->validateEmptyFields($data);
 		$required = [
 			'from' => ['email'],
@@ -19,7 +20,6 @@ class SendEmails extends AbstractApi {
 			'subject'
 		];
 		$this->validator->validateRequiredFields($required, $data);
-		$this->sanitize->sanitizeEmailHeaders($data);
 
 		return $this->request->post('send_emails', ['json' => $data]);
 	}

@@ -16,9 +16,7 @@ class Sanitize {
 			return;
 		}
 
-		$headers = $data['headers'];
-
-		if (!is_array($headers)) {
+		if (!is_array($data['headers'])) {
 			throw new \InvalidArgumentException('Invalid email header list.');
 		}
 
@@ -47,14 +45,14 @@ class Sanitize {
 		$regexp = '#' . implode('|', $reservedHeaders) . '#i';
 
 		// Remove reserved headers
-		foreach ($headers as $key => $value) {
+		foreach ($data['headers'] as $key => $value) {
 			if (!preg_match($regexp, $value)) {
 				continue;
 			}
 
-			unset($headers[$key]);
+			unset($data['headers'][$key]);
 		}
 
-		return $headers;
+		return $data;
 	}
 }

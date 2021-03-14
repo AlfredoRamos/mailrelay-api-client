@@ -41,7 +41,7 @@ abstract class AbstractApi {
 	}
 
 	public function patch(string $url = '', array $parameters = []) {
-		$response = $this->httpClient->put($url, $parameters);
+		$response = $this->httpClient->patch($url, $parameters);
 
 		return $this->httpClient->parseResponse($response);
 	}

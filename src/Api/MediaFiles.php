@@ -15,44 +15,12 @@ class MediaFiles extends AbstractApi {
 		return $this->request->get('media_files');
 	}
 
-	public function addNew($data = []) {
-		if (!is_array($data)) {
-			throw new \InvalidArgumentException('Invalid data to add a new media file.');
-		}
-
+	public function addNew(array $data = []) {
+		$this->validator->validateEmptyFields($data);
 		$required = [
 			'file' => ['name', 'content']
 		];
-		$invalid = [];
-
-		// TODO: Validate allowed values of required fields
-		foreach ($required as $key => $value) {
-			if (is_numeric($key) && empty($data[$value])) {
-				$invalid[] = $value;
-			}
-
-			if (is_string($key) && is_array($value)) {
-				$inv = [];
-
-				if (empty($data[$key])) {
-					$inv = $required[$key];
-				}
-
-				foreach ($value as $item) {
-					if (empty($data[$key][$item]) && !in_array($item, $inv)) {
-						$inv[] = $item;
-					}
-				}
-
-				if (!empty($inv)) {
-					$invalid[] = sprintf('%s[%s]', $key, implode(',', $inv));
-				}
-			}
-		}
-
-		if (!empty($invalid)) {
-			throw new \InvalidArgumentException('Missing required data to add a new media file: ' . implode(', ', $invalid));
-		}
+		$this->validator->validateRequiredFields($required, $data);
 
 		return $this->request->post('media_files', ['json' => $data]);
 	}

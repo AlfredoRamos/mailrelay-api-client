@@ -15,24 +15,10 @@ class MediaFolders extends AbstractApi {
 		return $this->request->get('media_folders');
 	}
 
-	public function addNew($data = []) {
-		if (!is_array($data)) {
-			throw new \InvalidArgumentException('Invalid data to add a new media folder.');
-		}
-
+	public function addNew(array $data = []) {
+		$this->validator->validateEmptyFields($data);
 		$required = ['name'];
-		$invalid = [];
-
-		// TODO: Validate allowed values of required fields
-		foreach ($required as $item) {
-			if (empty($data[$item])) {
-				$invalid[] = $item;
-			}
-		}
-
-		if (!empty($invalid)) {
-			throw new \InvalidArgumentException('Missing required data to add a new media folder: ' . implode(', ', $invalid));
-		}
+		$this->validator->validateRequiredFields($required, $data);
 
 		return $this->request->post('media_folders', ['json' => $data]);
 	}
@@ -45,10 +31,8 @@ class MediaFolders extends AbstractApi {
 		return $this->request->delete(sprintf('media_folders/%d', $itemId));
 	}
 
-	public function updateMediaFolder(int $itemId = 0, $data = []) {
-		if (!is_array($data)) {
-			throw new \InvalidArgumentException('Invalid data to update media folder.');
-		}
+	public function updateMediaFolder(int $itemId = 0, array $data = []) {
+		$this->validator->validateEmptyFields($data);
 
 		return $this->request->patch(
 			sprintf('media_folders/%d', $itemId),

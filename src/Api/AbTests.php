@@ -15,29 +15,15 @@ class AbTests extends AbstractApi {
 		return $this->request->get('ab_tests');
 	}
 
-	public function addNew($data = []) {
-		if (!is_array($data)) {
-			throw new \InvalidArgumentException('Invalid data to add a new A/B test.');
-		}
-
+	public function addNew(array $data = []) {
+		$this->validator->validateEmptyFields($data);
 		$required = [
 			'campaign_id',
 			'test_type',
 			'percentage',
 			'decide_with'
 		];
-		$invalid = [];
-
-		// TODO: Validate allowed values of required fields
-		foreach ($required as $item) {
-			if (empty($data[$item])) {
-				$invalid[] = $item;
-			}
-		}
-
-		if (!empty($invalid)) {
-			throw new \InvalidArgumentException('Missing required data to add a new A/B test: ' . implode(', ', $invalid));
-		}
+		$this->validator->validateRequiredFields($required, $data);
 
 		return $this->request->post('ab_tests', ['json' => $data]);
 	}
@@ -54,24 +40,10 @@ class AbTests extends AbstractApi {
 		return $this->request->patch(sprintf('ab_tests/%d/cancel', $itemId));
 	}
 
-	public function choose(int $itemId = 0, $data = []) {
-		if (!is_array($data)) {
-			throw new \InvalidArgumentException('Invalid data to choose A/B test winning combination.');
-		}
-
+	public function choose(int $itemId = 0, array $data = []) {
+		$this->validator->validateEmptyFields($data);
 		$required = ['combination'];
-		$invalid = [];
-
-		// TODO: Validate allowed values of required fields
-		foreach ($required as $item) {
-			if (empty($data[$item])) {
-				$invalid[] = $item;
-			}
-		}
-
-		if (!empty($invalid)) {
-			throw new \InvalidArgumentException('Missing required data to choose A/B test winning combination: ' . implode(', ', $invalid));
-		}
+		$this->validator->validateRequiredFields($required, $data);
 
 		return $this->request->post(
 			sprintf('ab_tests/%d/choose_winning_combination', $itemId),

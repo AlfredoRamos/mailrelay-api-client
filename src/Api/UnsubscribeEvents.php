@@ -15,24 +15,10 @@ class UnsubscribeEvents extends AbstractApi {
 		return $this->request->get('unsubscribe_events');
 	}
 
-	public function addNew($data = []) {
-		if (!is_array($data)) {
-			throw new \InvalidArgumentException('Invalid data to add a new unsubscribe event.');
-		}
-
+	public function addNew(array $data = []) {
+		$this->validator->validateEmptyFields($data);
 		$required = ['sent_email_id'];
-		$invalid = [];
-
-		// TODO: Validate allowed values of required fields
-		foreach ($required as $item) {
-			if (empty($data[$item])) {
-				$invalid[] = $item;
-			}
-		}
-
-		if (!empty($invalid)) {
-			throw new \InvalidArgumentException('Missing required data to add a new unsubscribe event: ' . implode(', ', $invalid));
-		}
+		$this->validator->validateRequiredFields($required, $data);
 
 		return $this->request->post('unsubscribe_events', ['json' => $data]);
 	}

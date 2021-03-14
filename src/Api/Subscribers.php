@@ -15,27 +15,13 @@ class Subscribers extends AbstractApi {
 		return $this->request->get('subscribers');
 	}
 
-	public function addNew($data = []) {
-		if (!is_array($data)) {
-			throw new \InvalidArgumentException('Invalid data to add a new subscriber.');
-		}
-
+	public function addNew(array $data = []) {
+		$this->validator->validateEmptyFields($data);
 		$required = [
 			'status',
 			'email'
 		];
-		$invalid = [];
-
-		// TODO: Validate allowed values of required fields
-		foreach ($required as $item) {
-			if (empty($data[$item])) {
-				$invalid[] = $item;
-			}
-		}
-
-		if (!empty($invalid)) {
-			throw new \InvalidArgumentException('Missing required data to add a new subscriber: ' . implode(', ', $invalid));
-		}
+		$this->validator->validateRequiredFields($required, $data);
 
 		return $this->request->post('subscribers', ['json' => $data]);
 	}
@@ -48,10 +34,8 @@ class Subscribers extends AbstractApi {
 		return $this->request->delete(sprintf('subscribers/%d', $itemId));
 	}
 
-	public function updateSubscriber(int $itemId = 0, $data = []) {
-		if (!is_array($data)) {
-			throw new \InvalidArgumentException('Invalid data to update subscriber.');
-		}
+	public function updateSubscriber(int $itemId = 0, array $data = []) {
+		$this->validator->validateEmptyFields($data);
 
 		return $this->request->patch(
 			sprintf('subscribers/%d', $itemId),
@@ -59,7 +43,7 @@ class Subscribers extends AbstractApi {
 		);
 	}
 
-	public function banSubscriber(int $itemId = 0, $data = []) {
+	public function banSubscriber(int $itemId = 0) {
 		return $this->request->patch(sprintf('subscribers/%d/ban', $itemId));
 	}
 
@@ -79,27 +63,13 @@ class Subscribers extends AbstractApi {
 		return $this->request->get('subscribers/deleted');
 	}
 
-	public function sync($data = []) {
-		if (!is_array($data)) {
-			throw new \InvalidArgumentException('Invalid data to sync subscriber.');
-		}
-
+	public function sync(array $data = []) {
+		$this->validator->validateEmptyFields($data);
 		$required = [
 			'status',
 			'email'
 		];
-		$invalid = [];
-
-		// TODO: Validate allowed values of required fields
-		foreach ($required as $item) {
-			if (empty($data[$item])) {
-				$invalid[] = $item;
-			}
-		}
-
-		if (!empty($invalid)) {
-			throw new \InvalidArgumentException('Missing required data to sync subscriber: ' . implode(', ', $invalid));
-		}
+		$this->validator->validateRequiredFields($required, $data);
 
 		return $this->request->post('subscribers/sync', ['json' => $data]);
 	}

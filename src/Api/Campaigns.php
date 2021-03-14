@@ -15,10 +15,8 @@ class Campaigns extends AbstractApi {
 		return $this->request->get('campaigns');
 	}
 
-	public function addNew($data = []) {
-		if (!is_array($data)) {
-			throw new \InvalidArgumentException('Invalid data to add a new campaign.');
-		}
+	public function addNew(array $data = []) {
+		$this->validator->validateEmptyFields($data);
 
 		$required = [
 			'sender_id',
@@ -26,18 +24,7 @@ class Campaigns extends AbstractApi {
 			'html',
 			'target'
 		];
-		$invalid = [];
-
-		// TODO: Validate allowed values of required fields
-		foreach ($required as $item) {
-			if (empty($data[$item])) {
-				$invalid[] = $item;
-			}
-		}
-
-		if (!empty($invalid)) {
-			throw new \InvalidArgumentException('Missing required data to add a new campaign: ' . implode(', ', $invalid));
-		}
+		$this->validator->validateRequiredFields($required, $data);
 
 		return $this->request->post('campaigns', ['json' => $data]);
 	}
@@ -50,10 +37,8 @@ class Campaigns extends AbstractApi {
 		return $this->request->delete(sprintf('campaigns/%d', $itemId));
 	}
 
-	public function updateCampaign(int $itemId = 0, $data = []) {
-		if (!is_array($data)) {
-			throw new \InvalidArgumentException('Invalid data to update campaign.');
-		}
+	public function updateCampaign(int $itemId = 0, array $data = []) {
+		$this->validator->validateEmptyFields($data);
 
 		return $this->request->patch(
 			sprintf('campaigns/%d', $itemId),
@@ -61,24 +46,10 @@ class Campaigns extends AbstractApi {
 		);
 	}
 
-	public function sendCampaign(int $itemId = 0, $data = []) {
-		if (!is_array($data)) {
-			throw new \InvalidArgumentException('Invalid data to send campaign.');
-		}
-
+	public function sendCampaign(int $itemId = 0, array $data = []) {
+		$this->validator->validateEmptyFields($data);
 		$required = ['target'];
-		$invalid = [];
-
-		// TODO: Validate allowed values of required fields
-		foreach ($required as $item) {
-			if (empty($data[$item])) {
-				$invalid[] = $item;
-			}
-		}
-
-		if (!empty($invalid)) {
-			throw new \InvalidArgumentException('Missing required data to send campaign: ' . implode(', ', $invalid));
-		}
+		$this->validator->validateRequiredFields($required, $data);
 
 		return $this->request->post(
 			sprintf('campaigns/%d/send_all', $itemId),
@@ -86,24 +57,10 @@ class Campaigns extends AbstractApi {
 		);
 	}
 
-	public function sendTest(int $itemId = 0, $data = []) {
-		if (!is_array($data)) {
-			throw new \InvalidArgumentException('Invalid data to send test campaign.');
-		}
-
+	public function sendTest(int $itemId = 0, array $data = []) {
+		$this->validator->validateEmptyFields($data);
 		$required = ['test_emails'];
-		$invalid = [];
-
-		// TODO: Validate allowed values of required fields
-		foreach ($required as $item) {
-			if (empty($data[$item])) {
-				$invalid[] = $item;
-			}
-		}
-
-		if (!empty($invalid)) {
-			throw new \InvalidArgumentException('Missing required data to send test campaign: ' . implode(', ', $invalid));
-		}
+		$this->validator->validateRequiredFields($required, $data);
 
 		return $this->request->post(
 			sprintf('campaigns/%d/send_test', $itemId),

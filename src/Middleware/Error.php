@@ -47,7 +47,11 @@ class Error {
 		}
 
 		if (is_array($responseBody) && !empty($responseBody['error'])) {
-			$message = 'Mailrelay API request failed: ' . $responseBody['error'];
+			$message = sprintf(
+				'[%d] Mailrelay API request failed: %2$s',
+				$response->getStatusCode(),
+				$responseBody['error']
+			);
 			throw new \ErrorException($message, $response->getStatusCode());
 		}
 

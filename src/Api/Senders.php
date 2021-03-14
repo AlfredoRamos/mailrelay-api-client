@@ -15,27 +15,13 @@ class Senders extends AbstractApi {
 		return $this->request->get('senders');
 	}
 
-	public function addNew($data = []) {
-		if (!is_array($data)) {
-			throw new \InvalidArgumentException('Invalid data to add a new sender.');
-		}
-
+	public function addNew(array $data = []) {
+		$this->validator->validateEmptyFields($data);
 		$required = [
 			'name',
 			'email'
 		];
-		$invalid = [];
-
-		// TODO: Validate allowed values of required fields
-		foreach ($required as $item) {
-			if (empty($data[$item])) {
-				$invalid[] = $item;
-			}
-		}
-
-		if (!empty($invalid)) {
-			throw new \InvalidArgumentException('Missing required data to add a new sender: ' . implode(', ', $invalid));
-		}
+		$this->validator->validateRequiredFields($required, $data);
 
 		return $this->request->post('senders', ['json' => $data]);
 	}
@@ -48,10 +34,8 @@ class Senders extends AbstractApi {
 		return $this->request->delete(sprintf('senders/%d', $itemId));
 	}
 
-	public function updateSender(int $itemId = 0, $data = []) {
-		if (!is_array($data)) {
-			throw new \InvalidArgumentException('Invalid data to add a new sender.');
-		}
+	public function updateSender(int $itemId = 0, array $data = []) {
+		$this->validator->validateEmptyFields($data);
 
 		return $this->request->patch(
 			sprintf('senders/%d', $itemId),
@@ -60,10 +44,6 @@ class Senders extends AbstractApi {
 	}
 
 	public function sendConfirmation(int $itemId = 0) {
-		if (!is_array($data)) {
-			throw new \InvalidArgumentException('Invalid data to add a new sender.');
-		}
-
 		return $this->request->post(sprintf('senders/%d/send_confirmation_email', $itemId));
 	}
 }

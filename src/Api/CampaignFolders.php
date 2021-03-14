@@ -15,24 +15,10 @@ class CampaignFolders extends AbstractApi {
 		return $this->request->get('campaign_folders');
 	}
 
-	public function addFolder($data = []) {
-		if (!is_array($data)) {
-			throw new \InvalidArgumentException('Invalid data to add a new campaign folder.');
-		}
-
+	public function addFolder(array $data = []) {
+		$this->validator->validateEmptyFields($data);
 		$required = ['name'];
-		$invalid = [];
-
-		// TODO: Validate allowed values of required fields
-		foreach ($required as $item) {
-			if (empty($data[$item])) {
-				$invalid[] = $item;
-			}
-		}
-
-		if (!empty($invalid)) {
-			throw new \InvalidArgumentException('Missing required data to add a new campaign folder: ' . implode(', ', $invalid));
-		}
+		$this->validator->validateRequiredFields($required, $data);
 
 		return $this->request->post('campaign_folders', ['json' => $data]);
 	}
@@ -45,7 +31,9 @@ class CampaignFolders extends AbstractApi {
 		return $this->request->delete(sprintf('campaign_folders/%d', $itemId));
 	}
 
-	public function updateFolder(int $itemId = 0, $data = []) {
+	public function updateFolder(int $itemId = 0, array $data = []) {
+		$this->validator->validateEmptyFields($data);
+
 		return $this->request->patch(
 			sprintf('campaign_folders/%d', $itemId),
 			['json' => $data]

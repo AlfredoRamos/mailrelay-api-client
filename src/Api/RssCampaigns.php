@@ -15,11 +15,8 @@ class RssCampaigns extends AbstractApi {
 		return $this->request->get('rss_campaigns');
 	}
 
-	public function addNew($data = []) {
-		if (!is_array($data)) {
-			throw new \InvalidArgumentException('Invalid data to add a new RSS campaign.');
-		}
-
+	public function addNew(array $data = []) {
+		$this->validator->validateEmptyFields($data);
 		$required = [
 			'sender_id',
 			'subject',
@@ -29,18 +26,7 @@ class RssCampaigns extends AbstractApi {
 			'frequency',
 			'number_of_entries'
 		];
-		$invalid = [];
-
-		// TODO: Validate allowed values of required fields
-		foreach ($required as $item) {
-			if (empty($data[$item])) {
-				$invalid[] = $item;
-			}
-		}
-
-		if (!empty($invalid)) {
-			throw new \InvalidArgumentException('Missing required data to add a new RSS campaign: ' . implode(', ', $invalid));
-		}
+		$this->validator->validateRequiredFields($required, $data);
 
 		return $this->request->post('rss_campaigns', ['json' => $data]);
 	}
@@ -53,10 +39,8 @@ class RssCampaigns extends AbstractApi {
 		return $this->request->delete(sprintf('rss_campaigns/%d', $itemId));
 	}
 
-	public function updateCampaign(int $itemId = 0, $data = []) {
-		if (!is_array($data)) {
-			throw new \InvalidArgumentException('Invalid data to update RSS campaign.');
-		}
+	public function updateCampaign(int $itemId = 0, array $data = []) {
+		$this->validator->validateEmptyFields($data);
 
 		return $this->request->patch(
 			sprintf('rss_campaigns/%d', $itemId),

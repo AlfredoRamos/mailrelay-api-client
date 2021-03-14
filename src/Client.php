@@ -23,28 +23,32 @@ class Client {
 	private $httpClient;
 
 	public function __construct(array $options = []) {
-		foreach ($options as $key => $value) {
-			if (!array_key_exists($key, $this->options) || empty($value)) {
+		$missing = [];
+
+		foreach ($this->options as $key => $value) {
+			if (empty($options[$key])) {
+				$missing[] = $key;
 				continue;
 			}
 
 			if ($key === 'api_account') {
 				$suffix = '.ipzmarketing.com';
 
-				if (Str::endsWith($value, $suffix)) {
-					str_replace($suffix, '', $value);
+				if (Str::endsWith($options[$key], $suffix)) {
+					$options[$key] = str_replace($suffix, '', $options[$key]);
 				}
 			}
 
-			$this->options[$key] = $value;
+			if (empty($options[$key])) {
+				$missing[] = $key;
+				continue;
+			}
+
+			$this->options[$key] = $options[$key];
 		}
 
-		if (empty($this->options['api_account'])) {
-			throw new \InvalidArgumentException('You need to provide a Mailrelay API account.');
-		}
-
-		if (empty($this->options['api_token'])) {
-			throw new \InvalidArgumentException('You need to provide a Mailrelay API token.');
+		if (!empty($missing)) {
+			throw new \InvalidArgumentException('Missing Mailrelay API data: ' . implode(', ', $missing));
 		}
 	}
 

@@ -22,7 +22,7 @@ class Sanitize {
 	 */
 	public function sanitizeEmailHeaders(array $data = []) {
 		if (empty($data['headers'])) {
-			return;
+			return $data;
 		}
 
 		if (!is_array($data['headers'])) {
@@ -51,7 +51,7 @@ class Sanitize {
 		];
 
 		$reservedHeaders = array_map('preg_quote', $reservedHeaders);
-		$regexp = '#' . implode('|', $reservedHeaders) . '#i';
+		$regexp = '#^(?:' . implode('|', $reservedHeaders) . ')#i';
 
 		// Remove reserved headers
 		foreach ($data['headers'] as $key => $value) {

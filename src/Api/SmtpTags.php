@@ -11,7 +11,14 @@
 namespace AlfredoRamos\Mailrelay\Api;
 
 class SmtpTags extends AbstractApi {
-	public function getList() {
-		return $this->request->get('smtp_tags');
+	/**
+	 * List SMTP tags.
+	 *
+	 * @param array $data Request parameters.
+	 *
+	 * @return array Response data.
+	 */
+	public function list(array $data = []) {
+		return $this->request->get('smtp_tags', ['query' => $data]);
 	}
 }

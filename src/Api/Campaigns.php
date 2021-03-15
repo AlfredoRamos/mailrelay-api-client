@@ -11,13 +11,28 @@
 namespace AlfredoRamos\Mailrelay\Api;
 
 class Campaigns extends AbstractApi {
-	public function getList() {
-		return $this->request->get('campaigns');
+	/**
+	 * List campaigns.
+	 *
+	 * @param array $data Request parameters.
+	 *
+	 * @return array Response data.
+	 */
+	public function list(array $data = []) {
+		return $this->request->get('campaigns', ['query' => $data]);
 	}
 
-	public function addNew(array $data = []) {
+	/**
+	 * Add a new campaign.
+	 *
+	 * @param array $data Request parameters.
+	 *
+	 * @throws \InvalidArgumentException If data does not pass validation.
+	 *
+	 * @return array Response data.
+	 */
+	public function add(array $data = []) {
 		$this->validator->validateEmptyFields($data);
-
 		$required = [
 			'sender_id',
 			'subject',
@@ -29,15 +44,39 @@ class Campaigns extends AbstractApi {
 		return $this->request->post('campaigns', ['json' => $data]);
 	}
 
-	public function getInfo(int $itemId = 0) {
+	/**
+	 * Get a campaign by ID.
+	 *
+	 * @param int $itemId Item ID.
+	 *
+	 * @return array Response data.
+	 */
+	public function get(int $itemId = 0) {
 		return $this->request->get(sprintf('campaigns/%d', $itemId));
 	}
 
-	public function deleteCampaign(int $itemId = 0) {
+	/**
+	 * Remove a campaign.
+	 *
+	 * @param int $itemId Item ID.
+	 *
+	 * @return array Response data.
+	 */
+	public function delete(int $itemId = 0) {
 		return $this->request->delete(sprintf('campaigns/%d', $itemId));
 	}
 
-	public function updateCampaign(int $itemId = 0, array $data = []) {
+	/**
+	 * Update a campaign.
+	 *
+	 * @param int	$itemId	Item ID.
+	 * @param array	$data	Request parameters.
+	 *
+	 * @throws \InvalidArgumentException If data does not pass validation.
+	 *
+	 * @return array Response data.
+	 */
+	public function update(int $itemId = 0, array $data = []) {
 		$this->validator->validateEmptyFields($data);
 
 		return $this->request->patch(
@@ -46,7 +85,17 @@ class Campaigns extends AbstractApi {
 		);
 	}
 
-	public function sendCampaign(int $itemId = 0, array $data = []) {
+	/**
+	 * Send a campaign.
+	 *
+	 * @param int	$itemId	Item ID.
+	 * @param array	$data	Request parameters.
+	 *
+	 * @throws \InvalidArgumentException If data does not pass validation.
+	 *
+	 * @return array Response data.
+	 */
+	public function send(int $itemId = 0, array $data = []) {
 		$this->validator->validateEmptyFields($data);
 		$required = ['target'];
 		$this->validator->validateRequiredFields($required, $data);
@@ -57,6 +106,16 @@ class Campaigns extends AbstractApi {
 		);
 	}
 
+	/**
+	 * Send a campaign to test emails.
+	 *
+	 * @param int	$itemId	Item ID.
+	 * @param array	$data	Request parameters.
+	 *
+	 * @throws \InvalidArgumentException If data does not pass validation.
+	 *
+	 * @return array Response data.
+	 */
 	public function sendTest(int $itemId = 0, array $data = []) {
 		$this->validator->validateEmptyFields($data);
 		$required = ['test_emails'];

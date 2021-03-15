@@ -11,39 +11,118 @@
 namespace AlfredoRamos\Mailrelay\Api;
 
 class SentCampaigns extends AbstractApi {
-	public function getList() {
-		return $this->request->get('sent_campaigns');
+	/**
+	 * List sent campaigns.
+	 *
+	 * @param array $data Request parameters.
+	 *
+	 * @return array Response data.
+	 */
+	public function list(array $data = []) {
+		return $this->request->get('sent_campaigns', ['query' => $data]);
 	}
 
-	public function getInfo(int $itemId = 0) {
+	/**
+	 * Get a single sent campaign.
+	 *
+	 * @param int $itemId Item ID.
+	 *
+	 * @return array Response data.
+	 */
+	public function get(int $itemId = 0) {
 		return $this->request->get(sprintf('sent_campaigns/%d', $itemId));
 	}
 
-	public function cancelCampaign(int $itemId = 0) {
+	/**
+	 * Cancel a campaign.
+	 *
+	 * @param int $itemId Item ID.
+	 *
+	 * @return array Response data.
+	 */
+	public function cancel(int $itemId = 0) {
 		return $this->request->patch(sprintf('sent_campaigns/%d/cancel', $itemId));
 	}
 
-	public function getClicks(int $itemId = 0) {
-		return $this->request->get(sprintf('sent_campaigns/%d/clicks', $itemId));
+	/**
+	 * Get sent campaign's clicks.
+	 *
+	 * @param int	$itemId	Item ID.
+	 * @param array	$data	Request parameters.
+	 *
+	 * @return array Response data.
+	 */
+	public function clicks(int $itemId = 0, array $data = []) {
+		return $this->request->get(
+			sprintf('sent_campaigns/%d/clicks', $itemId),
+			['query' => $data]
+		);
 	}
 
-	public function getImpressions(int $itemId = 0) {
-		return $this->request->get(sprintf('sent_campaigns/%d/impressions', $itemId));
+	/**
+	 * Get sent campaign's impressions.
+	 *
+	 * @param int	$itemId	Item ID.
+	 * @param array	$data	Request parameters.
+	 *
+	 * @return array Response data.
+	 */
+	public function impressions(int $itemId = 0, array $data = []) {
+		return $this->request->get(
+			sprintf('sent_campaigns/%d/impressions', $itemId),
+			['query' => $data]
+		);
 	}
 
-	public function pauseCampaign(int $itemId = 0) {
+	/**
+	 * Pause a campaign that is being sent.
+	 *
+	 * @param int $itemId Item ID.
+	 *
+	 * @return array Response data.
+	 */
+	public function pause(int $itemId = 0) {
 		return $this->request->patch(sprintf('sent_campaigns/%d/pause', $itemId));
 	}
 
-	public function resumeCampaign(int $itemId = 0) {
+	/**
+	 * Resume a campaign that is paused.
+	 *
+	 * @param int $itemId Item ID.
+	 *
+	 * @return array Response data.
+	 */
+	public function resume(int $itemId = 0) {
 		return $this->request->patch(sprintf('sent_campaigns/%d/resume', $itemId));
 	}
 
-	public function getSentEmails(int $itemId = 0) {
-		return $this->request->get(sprintf('sent_campaigns/%d/sent_emails', $itemId));
+	/**
+	 * Get sent campaign's sent emails.
+	 *
+	 * @param int	$itemId	Item ID.
+	 * @param array	$data	Request parameters.
+	 *
+	 * @return array Response data.
+	 */
+	public function emails(int $itemId = 0, array $data = []) {
+		return $this->request->get(
+			sprintf('sent_campaigns/%d/sent_emails', $itemId),
+			['query' => $data]
+		);
 	}
 
-	public function getUnsubscribeEvents(int $itemId = 0) {
-		return $this->request->get(sprintf('sent_campaigns/%d/unsubscribe_events', $itemId));
+	/**
+	 * Get sent campaign's impressions.
+	 *
+	 * @param int	$itemId	Item ID.
+	 * @param array	$data	Request parameters.
+	 *
+	 * @return array Response data.
+	 */
+	public function unsubscribeEvents(int $itemId = 0, array $data = []) {
+		return $this->request->get(
+			sprintf('sent_campaigns/%d/unsubscribe_events', $itemId),
+			['query' => $data]
+		);
 	}
 }

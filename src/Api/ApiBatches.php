@@ -11,11 +11,27 @@
 namespace AlfredoRamos\Mailrelay\Api;
 
 class ApiBatches extends AbstractApi {
-	public function getList() {
-		return $this->request->get('api_batches');
+	/**
+	 * List API batches.
+	 *
+	 * @param array $data Request parameters.
+	 *
+	 * @return array Response data.
+	 */
+	public function list(array $data = []) {
+		return $this->request->get('api_batches', ['query' => $data]);
 	}
 
-	public function addNew(array $data = []) {
+	/**
+	 * Add a new API batch.
+	 *
+	 * @param array $data Request parameters.
+	 *
+	 * @throws \InvalidArgumentException If data does not pass validation.
+	 *
+	 * @return array Response data.
+	 */
+	public function add(array $data = []) {
 		$this->validator->validateEmptyFields($data);
 		$required = [
 			'operations_attributes' => ['request_method', 'request_path']
@@ -25,7 +41,18 @@ class ApiBatches extends AbstractApi {
 		return $this->request->post('api_batches', ['json' => $data]);
 	}
 
-	public function getInfo(int $itemId = 0) {
-		return $this->request->get(sprintf('api_batches/%d', $itemId));
+	/**
+	 * Get a API batch by ID.
+	 *
+	 * @param int	$itemId	Item ID.
+	 * @param array	$data	Request parameters.
+	 *
+	 * @return array Response data.
+	 */
+	public function get(int $itemId = 0, array $data = []) {
+		return $this->request->get(
+			sprintf('api_batches/%d', $itemId),
+			['query' => $data]
+		);
 	}
 }

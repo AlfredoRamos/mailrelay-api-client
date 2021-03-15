@@ -11,11 +11,27 @@
 namespace AlfredoRamos\Mailrelay\Api;
 
 class RssCampaigns extends AbstractApi {
-	public function getList() {
-		return $this->request->get('rss_campaigns');
+	/**
+	 * List RSS campaigns.
+	 *
+	 * @param array $data Request parameters.
+	 *
+	 * @return array Response data.
+	 */
+	public function list(array $data = []) {
+		return $this->request->get('rss_campaigns', ['query' => $data]);
 	}
 
-	public function addNew(array $data = []) {
+	/**
+	 * Add a new RSS campaign.
+	 *
+	 * @param array $data Request parameters.
+	 *
+	 * @throws \InvalidArgumentException If data does not pass validation.
+	 *
+	 * @return array Response data.
+	 */
+	public function add(array $data = []) {
 		$this->validator->validateEmptyFields($data);
 		$required = [
 			'sender_id',
@@ -31,15 +47,39 @@ class RssCampaigns extends AbstractApi {
 		return $this->request->post('rss_campaigns', ['json' => $data]);
 	}
 
-	public function getInfo(int $itemId = 0) {
+	/**
+	 * Get a RSS campaign by ID.
+	 *
+	 * @param int $itemId Item ID.
+	 *
+	 * @return array Response data.
+	 */
+	public function get(int $itemId = 0) {
 		return $this->request->get(sprintf('rss_campaigns/%d', $itemId));
 	}
 
-	public function deleteCampaign(int $itemId = 0) {
+	/**
+	 * Remove a RSS campaign.
+	 *
+	 * @param int $itemId Item ID.
+	 *
+	 * @return array Response data.
+	 */
+	public function delete(int $itemId = 0) {
 		return $this->request->delete(sprintf('rss_campaigns/%d', $itemId));
 	}
 
-	public function updateCampaign(int $itemId = 0, array $data = []) {
+	/**
+	 * Update a RSS campaign.
+	 *
+	 * @param int	$itemId	Item ID.
+	 * @param array	$data	Request parameters.
+	 *
+	 * @throws \InvalidArgumentException If data does not pass validation.
+	 *
+	 * @return array Response data.
+	 */
+	public function update(int $itemId = 0, array $data = []) {
 		$this->validator->validateEmptyFields($data);
 
 		return $this->request->patch(
@@ -48,7 +88,18 @@ class RssCampaigns extends AbstractApi {
 		);
 	}
 
-	public function getProcessed(int $itemId = 0) {
-		return $this->request->get(sprintf('rss_campaigns/%d/processed_entries', $itemId));
+	/**
+	 * Get RSS campaign's pprocessed entries.
+	 *
+	 * @param int	$itemId	Item ID.
+	 * @param array	$data	Request parameters.
+	 *
+	 * @return array Response data.
+	 */
+	public function processed(int $itemId = 0, array $data = []) {
+		return $this->request->get(
+			sprintf('rss_campaigns/%d/processed_entries', $itemId),
+			['query' => $data]
+		);
 	}
 }

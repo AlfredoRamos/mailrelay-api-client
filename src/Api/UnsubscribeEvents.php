@@ -11,11 +11,27 @@
 namespace AlfredoRamos\Mailrelay\Api;
 
 class UnsubscribeEvents extends AbstractApi {
-	public function getList() {
-		return $this->request->get('unsubscribe_events');
+	/**
+	 * List unsubscribe events.
+	 *
+	 * @param array $data Request parameters.
+	 *
+	 * @return array Response data.
+	 */
+	public function list(array $data = []) {
+		return $this->request->get('unsubscribe_events', ['query' => $data]);
 	}
 
-	public function addNew(array $data = []) {
+	/**
+	 * Add a new unsubscribe event.
+	 *
+	 * @param array $data Request parameters.
+	 *
+	 * @throws \InvalidArgumentException If data does not pass validation.
+	 *
+	 * @return array Response data.
+	 */
+	public function add(array $data = []) {
 		$this->validator->validateEmptyFields($data);
 		$required = ['sent_email_id'];
 		$this->validator->validateRequiredFields($required, $data);
@@ -23,11 +39,25 @@ class UnsubscribeEvents extends AbstractApi {
 		return $this->request->post('unsubscribe_events', ['json' => $data]);
 	}
 
-	public function getInfo(int $itemId = 0) {
+	/**
+	 * Get an unsubscribe event by ID.
+	 *
+	 * @param int $itemId Item ID.
+	 *
+	 * @return array Response data.
+	 */
+	public function get(int $itemId = 0) {
 		return $this->request->get(sprintf('unsubscribe_events/%d', $itemId));
 	}
 
-	public function deleteEvent(int $itemId = 0) {
+	/**
+	 * Remove an unsubscribe event.
+	 *
+	 * @param int $itemId Item ID.
+	 *
+	 * @return array Response data.
+	 */
+	public function delete(int $itemId = 0) {
 		return $this->request->delete(sprintf('unsubscribe_events/%d', $itemId));
 	}
 }

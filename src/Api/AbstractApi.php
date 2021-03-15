@@ -20,12 +20,9 @@ abstract class AbstractApi {
 	protected $validator;
 	protected $sanitize;
 
-	public function __construct(Client $client, PagerInterface $pager = null) {
+	public function __construct(Client $client) {
 		if (empty($this->request)) {
-			$this->request = new Request(
-				$client->getOptions(),
-				$pager
-			);
+			$this->request = new Request($client->getOptions());
 		}
 
 		if (empty($this->validator)) {

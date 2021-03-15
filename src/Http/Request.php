@@ -11,27 +11,18 @@
 namespace AlfredoRamos\Mailrelay\Http;
 
 use AlfredoRamos\Mailrelay\Http\Client as HttpClient;
-use AlfredoRamos\Mailrelay\Pager\PagerInterface;
 
 class Request implements RequestInterface {
 	private $httpClient;
-	private $pager;
 
-	public function __construct(array $options = [], PagerInterface $pager = null) {
+	public function __construct(array $options = []) {
 		if (empty($this->httpClient)) {
 			$this->httpClient = new HttpClient($options);
 		}
-
-		$this->pager = $pager;
 	}
 
 	public function get(string $url = '', array $parameters = []) {
-		if (!empty($this->pager)) {
-			$parameters['page'] = $this->pager->getPage();
-			$parameters['per_page'] = $this->pager->getResultsPerPage();
-		}
-
-		$response = $this->httpClient->get($url, ['query' => $parameters]);
+		$response = $this->httpClient->get($url, $parameters);
 
 		return $this->httpClient->parseResponse($response);
 	}

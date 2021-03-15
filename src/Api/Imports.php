@@ -11,11 +11,27 @@
 namespace AlfredoRamos\Mailrelay\Api;
 
 class Imports extends AbstractApi {
-	public function getList() {
-		return $this->request->get('imports');
+	/**
+	 * List imports.
+	 *
+	 * @param array $data Request parameters.
+	 *
+	 * @return array Response data.
+	 */
+	public function list(array $data = []) {
+		return $this->request->get('imports', ['query' => $data]);
 	}
 
-	public function addNew(array $data = []) {
+	/**
+	 * Import a new file.
+	 *
+	 * @param array $data Request parameters.
+	 *
+	 * @throws \InvalidArgumentException If data does not pass validation.
+	 *
+	 * @return array Response data.
+	 */
+	public function add(array $data = []) {
 		$this->validator->validateEmptyFields($data);
 		$required = [
 			'file' => ['name', 'content'],
@@ -26,15 +42,40 @@ class Imports extends AbstractApi {
 		return $this->request->post('imports', ['json' => $data]);
 	}
 
-	public function getInfo(int $itemId = 0) {
+	/**
+	 * Get a import by ID.
+	 *
+	 * @param int $itemId Item ID.
+	 *
+	 * @return array Response data.
+	 */
+	public function get(int $itemId = 0) {
 		return $this->request->get(sprintf('imports/%d', $itemId));
 	}
 
-	public function cancelImport(int $itemId = 0) {
+	/**
+	 * Cancel a import that is in progress.
+	 *
+	 * @param int $itemId Item ID.
+	 *
+	 * @return array Response data.
+	 */
+	public function cancel(int $itemId = 0) {
 		return $this->request->patch(sprintf('imports/%d/cancel', $itemId));
 	}
 
-	public function getContents(int $itemId = 0) {
-		return $this->request->get(sprintf('imports/%d/data', $itemId));
+	/**
+	 * Get line by line data of a import.
+	 *
+	 * @param int	$itemId	Item ID.
+	 * @param array	$data	Request parameters.
+	 *
+	 * @return array Response data.
+	 */
+	public function data(int $itemId = 0, array $data = []) {
+		return $this->request->get(
+			sprintf('imports/%d/data', $itemId),
+			['query' => $data]
+		);
 	}
 }

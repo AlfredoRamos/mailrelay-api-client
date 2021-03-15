@@ -11,11 +11,27 @@
 namespace AlfredoRamos\Mailrelay\Api;
 
 class AbTests extends AbstractApi {
-	public function getList() {
-		return $this->request->get('ab_tests');
+	/**
+	 * List A/B tests.
+	 *
+	 * @param array $data Request parameters.
+	 *
+	 * @return array Response data.
+	 */
+	public function list(array $data = []) {
+		return $this->request->get('ab_tests', ['query' => $data]);
 	}
 
-	public function addNew(array $data = []) {
+	/**
+	 * Add a new A/B test.
+	 *
+	 * @param array $data Request parameters.
+	 *
+	 * @throws \InvalidArgumentException If data does not pass validation.
+	 *
+	 * @return array Response data.
+	 */
+	public function add(array $data = []) {
 		$this->validator->validateEmptyFields($data);
 		$required = [
 			'campaign_id',
@@ -28,18 +44,49 @@ class AbTests extends AbstractApi {
 		return $this->request->post('ab_tests', ['json' => $data]);
 	}
 
-	public function getInfo(int $itemId = 0) {
+	/**
+	 * Get an A/B test by ID.
+	 *
+	 * @param int $itemId Item ID.
+	 *
+	 * @return array Response data.
+	 */
+	public function get(int $itemId = 0) {
 		return $this->request->get(sprintf('ab_tests/%d', $itemId));
 	}
 
-	public function deleteTest(int $itemId = 0) {
+	/**
+	 * Remove an A/B test.
+	 *
+	 * @param int $itemId Item ID.
+	 *
+	 * @return array Response data.
+	 */
+	public function delete(int $itemId = 0) {
 		return $this->request->delete(sprintf('ab_tests/%d', $itemId));
 	}
 
-	public function cancelTest(int $itemId = 0) {
+	/**
+	 * Cancel A/B test.
+	 *
+	 * @param int $itemId Item ID.
+	 *
+	 * @return array Response data.
+	 */
+	public function cancel(int $itemId = 0) {
 		return $this->request->patch(sprintf('ab_tests/%d/cancel', $itemId));
 	}
 
+	/**
+	 * Choose which A/B test combination should to be sent to the remaining subscribers.
+	 *
+	 * @param int	$itemId	Item ID.
+	 * @param array	$data	Request parameters.
+	 *
+	 * @throws \InvalidArgumentException If data does not pass validation.
+	 *
+	 * @return array Response data.
+	 */
 	public function choose(int $itemId = 0, array $data = []) {
 		$this->validator->validateEmptyFields($data);
 		$required = ['combination'];
@@ -51,7 +98,14 @@ class AbTests extends AbstractApi {
 		);
 	}
 
-	public function setManual(int $itemId = 0) {
+	/**
+	 * Set A/B test as manual
+	 *
+	 * @param int $itemId Item ID.
+	 *
+	 * @return array Response data.
+	 */
+	public function manual(int $itemId = 0) {
 		return $this->request->patch(sprintf('ab_tests/%d/set_as_manual', $itemId));
 	}
 }

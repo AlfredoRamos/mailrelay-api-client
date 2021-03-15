@@ -11,11 +11,27 @@
 namespace AlfredoRamos\Mailrelay\Api;
 
 class Senders extends AbstractApi {
-	public function getList() {
-		return $this->request->get('senders');
+	/**
+	 * List senders.
+	 *
+	 * @param array $data Request parameters.
+	 *
+	 * @return array Response data.
+	 */
+	public function list(array $data = []) {
+		return $this->request->get('senders', ['query' => $data]);
 	}
 
-	public function addNew(array $data = []) {
+	/**
+	 * Add a new sender.
+	 *
+	 * @param array $data Request parameters.
+	 *
+	 * @throws \InvalidArgumentException If data does not pass validation.
+	 *
+	 * @return array Response data.
+	 */
+	public function add(array $data = []) {
 		$this->validator->validateEmptyFields($data);
 		$required = [
 			'name',
@@ -26,15 +42,49 @@ class Senders extends AbstractApi {
 		return $this->request->post('senders', ['json' => $data]);
 	}
 
-	public function getInfo(int $itemId = 0) {
+	/**
+	 * Get a sender by ID.
+	 *
+	 * @param int $itemId Item ID.
+	 *
+	 * @return array Response data.
+	 */
+	public function get(int $itemId = 0) {
 		return $this->request->get(sprintf('senders/%d', $itemId));
 	}
 
-	public function deleteSender(int $itemId = 0) {
-		return $this->request->delete(sprintf('senders/%d', $itemId));
+	/**
+	 * Remove a sender.
+	 *
+	 * @param int	$itemId	Item ID.
+	 * @param array	$data	Request parameters.
+	 *
+	 * @throws \InvalidArgumentException If data does not pass validation.
+	 *
+	 * @return array Response data.
+	 */
+	public function delete(int $itemId = 0, array $data = []) {
+		$this->validator->validateEmptyFields($data);
+		$required = ['new_sender_id'];
+		$this->validator->validateRequiredFields($required, $data);
+
+		return $this->request->delete(
+			sprintf('senders/%d', $itemId),
+			['json' => $data]
+		);
 	}
 
-	public function updateSender(int $itemId = 0, array $data = []) {
+	/**
+	 * Update a sender.
+	 *
+	 * @param int	$itemId	Item ID.
+	 * @param array	$data	Request parameters.
+	 *
+	 * @throws \InvalidArgumentException If data does not pass validation.
+	 *
+	 * @return array Response data.
+	 */
+	public function update(int $itemId = 0, array $data = []) {
 		$this->validator->validateEmptyFields($data);
 
 		return $this->request->patch(
@@ -43,6 +93,13 @@ class Senders extends AbstractApi {
 		);
 	}
 
+	/**
+	 * Send confirmation email.
+	 *
+	 * @param int $itemId Item ID.
+	 *
+	 * @return array Response data.
+	 */
 	public function sendConfirmation(int $itemId = 0) {
 		return $this->request->post(sprintf('senders/%d/send_confirmation_email', $itemId));
 	}

@@ -11,11 +11,29 @@
 namespace AlfredoRamos\Mailrelay\Api;
 
 class SmtpEmails extends AbstractApi {
-	public function getList() {
-		return $this->request->get('smtp_emails');
+	/**
+	 * List SMTP emails.
+	 *
+	 * @param array $data Request parameters.
+	 *
+	 * @return array Response data.
+	 */
+	public function list(array $data = []) {
+		return $this->request->get('smtp_emails', ['query' => $data]);
 	}
 
-	public function getInfo(int $itemId = 0) {
-		return $this->request->get(sprintf('smtp_emails/%d', $itemId));
+	/**
+	 * Get an SMTP email by ID.
+	 *
+	 * @param int	$itemId Item ID.
+	 * @param array	$data	Request parameters.
+	 *
+	 * @return array Response data.
+	 */
+	public function get(int $itemId = 0, array $data = []) {
+		return $this->request->get(
+			sprintf('smtp_emails/%d', $itemId),
+			['query' => $data]
+		);
 	}
 }

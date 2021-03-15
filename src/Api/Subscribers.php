@@ -11,11 +11,27 @@
 namespace AlfredoRamos\Mailrelay\Api;
 
 class Subscribers extends AbstractApi {
-	public function getList() {
-		return $this->request->get('subscribers');
+	/**
+	 * List subscribers.
+	 *
+	 * @param array $data Request parameters.
+	 *
+	 * @return array Response data.
+	 */
+	public function list(array $data = []) {
+		return $this->request->get('subscribers', ['query' => $data]);
 	}
 
-	public function addNew(array $data = []) {
+	/**
+	 * Add a new subscriber.
+	 *
+	 * @param array $data Request parameters.
+	 *
+	 * @throws \InvalidArgumentException If data does not pass validation.
+	 *
+	 * @return array Response data.
+	 */
+	public function add(array $data = []) {
 		$this->validator->validateEmptyFields($data);
 		$required = [
 			'status',
@@ -26,15 +42,43 @@ class Subscribers extends AbstractApi {
 		return $this->request->post('subscribers', ['json' => $data]);
 	}
 
-	public function getInfo(int $itemId = 0) {
-		return $this->request->get(sprintf('subscribers/%d', $itemId));
+	/**
+	 * Get a subscriber by ID.
+	 *
+	 * @param int	$itemId	Item ID.
+	 * @param array	$data	Request parameters.
+	 *
+	 * @return array Response data.
+	 */
+	public function get(int $itemId = 0, array $data = []) {
+		return $this->request->get(
+			sprintf('subscribers/%d', $itemId),
+			['query' => $data]
+		);
 	}
 
-	public function deleteSubscriber(int $itemId = 0) {
+	/**
+	 * Remove a subscriber.
+	 *
+	 * @param int $itemId Item ID.
+	 *
+	 * @return array Response data.
+	 */
+	public function delete(int $itemId = 0) {
 		return $this->request->delete(sprintf('subscribers/%d', $itemId));
 	}
 
-	public function updateSubscriber(int $itemId = 0, array $data = []) {
+	/**
+	 * Update a subscriber.
+	 *
+	 * @param int	$itemId	Item ID.
+	 * @param array	$data	Request parameters.
+	 *
+	 * @throws \InvalidArgumentException If data does not pass validation.
+	 *
+	 * @return array Response data.
+	 */
+	public function update(int $itemId = 0, array $data = []) {
 		$this->validator->validateEmptyFields($data);
 
 		return $this->request->patch(
@@ -43,26 +87,71 @@ class Subscribers extends AbstractApi {
 		);
 	}
 
-	public function banSubscriber(int $itemId = 0) {
+	/**
+	 * Ban a subscriber.
+	 *
+	 * @param int $itemId Item ID.
+	 *
+	 * @return array Response data.
+	 */
+	public function ban(int $itemId = 0) {
 		return $this->request->patch(sprintf('subscribers/%d/ban', $itemId));
 	}
 
+	/**
+	 * Resend confirmation email to an inactive subscriber.
+	 *
+	 * @param int $itemId Item ID.
+	 *
+	 * @return array Response data.
+	 */
 	public function resendConfirmation(int $itemId = 0) {
 		return $this->request->post(sprintf('subscribers/%d/resend_confirmation_email', $itemId));
 	}
 
-	public function restoreSubscriber(int $itemId = 0) {
+	/**
+	 * Restore a deleted subscriber.
+	 *
+	 * @param int $itemId Item ID.
+	 *
+	 * @return array Response data.
+	 */
+	public function restore(int $itemId = 0) {
 		return $this->request->patch(sprintf('subscribers/%d/restore', $itemId));
 	}
 
-	public function unbanSubscriber(int $itemId = 0) {
+	/**
+	 * Unban a subscriber.
+	 *
+	 * @param int $itemId Item ID.
+	 *
+	 * @return array Response data.
+	 */
+	public function unban(int $itemId = 0) {
 		return $this->request->patch(sprintf('subscribers/%d/unban', $itemId));
 	}
 
-	public function getDeleted() {
-		return $this->request->get('subscribers/deleted');
+	/**
+	 * Get deleted subscribers.
+	 *
+	 * @param int	$itemId	Item ID.
+	 * @param array	$data	Request parameters.
+	 *
+	 * @return array Response data.
+	 */
+	public function deleted() {
+		return $this->request->get('subscribers/deleted', ['query' => $data]);
 	}
 
+	/**
+	 * Create or update a subscriber.
+	 *
+	 * @param array $data Request parameters.
+	 *
+	 * @throws \InvalidArgumentException If data does not pass validation.
+	 *
+	 * @return array Response data.
+	 */
 	public function sync(array $data = []) {
 		$this->validator->validateEmptyFields($data);
 		$required = [

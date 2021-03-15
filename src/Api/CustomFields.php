@@ -11,11 +11,27 @@
 namespace AlfredoRamos\Mailrelay\Api;
 
 class CustomFields extends AbstractApi {
-	public function getList() {
-		return $this->request->get('custom_fields');
+	/**
+	 * List custom fields.
+	 *
+	 * @param array $data Request parameters.
+	 *
+	 * @return array Response data.
+	 */
+	public function list(array $data = []) {
+		return $this->request->get('custom_fields', ['query' => $data]);
 	}
 
-	public function addNew(array $data = []) {
+	/**
+	 * Add a new custom field.
+	 *
+	 * @param array $data Request parameters.
+	 *
+	 * @throws \InvalidArgumentException If data does not pass validation.
+	 *
+	 * @return array Response data.
+	 */
+	public function add(array $data = []) {
 		$this->validator->validateEmptyFields($data);
 		$required = [
 			'label',
@@ -27,15 +43,39 @@ class CustomFields extends AbstractApi {
 		return $this->request->post('custom_fields', ['json' => $data]);
 	}
 
-	public function getInfo(int $itemId = 0) {
+	/**
+	 * Get a custom field by ID.
+	 *
+	 * @param int $itemId Item ID.
+	 *
+	 * @return array Response data.
+	 */
+	public function get(int $itemId = 0) {
 		return $this->request->get(sprintf('custom_fields/%d', $itemId));
 	}
 
-	public function deleteCustomField(int $itemId = 0) {
+	/**
+	 * Remove a custom field.
+	 *
+	 * @param int $itemId Item ID.
+	 *
+	 * @return array Response data.
+	 */
+	public function delete(int $itemId = 0) {
 		return $this->request->delete(sprintf('custom_fields/%d', $itemId));
 	}
 
-	public function updateCustomField(int $itemId = 0, array $data = []) {
+	/**
+	 * Update a custom field.
+	 *
+	 * @param int	$itemId	Item ID.
+	 * @param array	$data	Request parameters.
+	 *
+	 * @throws \InvalidArgumentException If data does not pass validation.
+	 *
+	 * @return array Response data.
+	 */
+	public function update(int $itemId = 0, array $data = []) {
 		$this->validator->validateEmptyFields($data);
 
 		return $this->request->patch(

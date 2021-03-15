@@ -11,6 +11,15 @@
 namespace AlfredoRamos\Mailrelay\Api;
 
 class SendEmails extends AbstractApi {
+	/**
+	 * Send email to one or more recipients.
+	 *
+	 * @param array $data Request parameters.
+	 *
+	 * @throws \InvalidArgumentException If data does not pass validation.
+	 *
+	 * @return array Response data.
+	 */
 	public function send(array $data = []) {
 		$data = $this->sanitize->sanitizeEmailHeaders($data);
 		$this->validator->validateEmptyFields($data);

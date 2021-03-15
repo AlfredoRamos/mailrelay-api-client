@@ -11,11 +11,27 @@
 namespace AlfredoRamos\Mailrelay\Api;
 
 class MediaFiles extends AbstractApi {
-	public function getList() {
-		return $this->request->get('media_files');
+	/**
+	 * List media files.
+	 *
+	 * @param array $data Request parameters.
+	 *
+	 * @return array Response data.
+	 */
+	public function list(array $data = []) {
+		return $this->request->get('media_files', ['query' => $data]);
 	}
 
-	public function addNew(array $data = []) {
+	/**
+	 * Add a new media file.
+	 *
+	 * @param array $data Request parameters.
+	 *
+	 * @throws \InvalidArgumentException If data does not pass validation.
+	 *
+	 * @return array Response data.
+	 */
+	public function add(array $data = []) {
 		$this->validator->validateEmptyFields($data);
 		$required = [
 			'file' => ['name', 'content']
@@ -25,23 +41,58 @@ class MediaFiles extends AbstractApi {
 		return $this->request->post('media_files', ['json' => $data]);
 	}
 
-	public function getInfo(int $itemId = 0) {
+	/**
+	 * Get a single media file.
+	 *
+	 * @param int $itemId Item ID.
+	 *
+	 * @return array Response data.
+	 */
+	public function get(int $itemId = 0) {
 		return $this->request->get(sprintf('media_files/%d', $itemId));
 	}
 
-	public function deleteMediaFile(int $itemId = 0) {
+	/**
+	 * Hard delete a media file.
+	 *
+	 * @param int $itemId Item ID.
+	 *
+	 * @return array Response data.
+	 */
+	public function delete(int $itemId = 0) {
 		return $this->request->delete(sprintf('media_files/%d', $itemId));
 	}
 
-	public function moveToTrash(int $itemId = 0) {
+	/**
+	 * Move media file to trash.
+	 *
+	 * @param int $itemId Item ID.
+	 *
+	 * @return array Response data.
+	 */
+	public function trash(int $itemId = 0) {
 		return $this->request->patch(sprintf('media_files/%d/move_to_trash', $itemId));
 	}
 
+	/**
+	 * Restore a file that is in trash.
+	 *
+	 * @param int $itemId Item ID.
+	 *
+	 * @return array Response data.
+	 */
 	public function restore(int $itemId = 0) {
 		return $this->request->patch(sprintf('media_files/%d/restore', $itemId));
 	}
 
-	public function trashed() {
-		return $this->request->get('media_files/trashed');
+	/**
+	 * List media files in trash.
+	 *
+	 * @param array $data Request parameters.
+	 *
+	 * @return array Response data.
+	 */
+	public function trashed(array $data = []) {
+		return $this->request->get('media_files/trashed', ['query' => $data]);
 	}
 }

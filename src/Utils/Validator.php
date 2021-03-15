@@ -11,6 +11,15 @@
 namespace AlfredoRamos\Mailrelay\Utils;
 
 class Validator {
+	/**
+	 * Validate if data is empty.
+	 *
+	 * @param array $data The data to validate.
+	 *
+	 * @throws \InvalidArgumentException If data is empty.
+	 *
+	 * @return void
+	 */
 	public function validateEmptyFields(array $data = []) {
 		if (!empty($data)) {
 			return;
@@ -19,6 +28,15 @@ class Validator {
 		throw new \InvalidArgumentException('Request data cannot be empty.');
 	}
 
+	/**
+	 * Validate if required data exists.
+	 *
+	 * @param array $data The data to validate.
+	 *
+	 * @throws \InvalidArgumentException If required fields are missing.
+	 *
+	 * @return void
+	 */
 	public function validateRequiredFields(array $required = [], array $data = []) {
 		if (empty($required)) {
 			throw new \InvalidArgumentException('Invalid required field list.');

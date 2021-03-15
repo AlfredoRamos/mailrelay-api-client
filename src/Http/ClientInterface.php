@@ -11,7 +11,23 @@
 namespace AlfredoRamos\Mailrelay\Http;
 
 interface ClientInterface {
-	public function sendRequest(string $url = '', array $parameters = [], $method = 'GET');
+	/**
+	 * Sent HTTP request.
+	 *
+	 * @param string	$url		The URL to send the request to.
+	 * @param array		$parameters	The request parameters.
+	 * @param string	$method		The HTTP method.
+	 *
+	 * @return \Psr7\Http\Message\RequestInterface The HTTP request.
+	 */
+	public function sendRequest(string $url = '', array $parameters = [], string $method = 'GET');
 
+	/**
+	 * Parse HTTP response.
+	 *
+	 * @param \Psr\Http\Message\ResponseInterface $response The HTTP response.
+	 *
+	 * @return array The response body.
+	 */
 	public function parseResponse($response);
 }

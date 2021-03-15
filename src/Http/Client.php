@@ -19,15 +19,28 @@ use GuzzleHttp\Middleware;
 use Psr\Http\Message\RequestInterface;
 
 class Client implements HttpRequestInterface, ClientInterface {
+	/** @var string */
 	protected $options = [];
+
+	/** @var \GuzzleHttp\Client */
 	protected $client;
+
+	/** @var \GuzzleHttp\HandlerStack */
 	protected $stack;
 
+	/**
+	 * HTTP client constructor.
+	 *
+	 * @param array $options Configuration options.
+	 *
+	 * @return void
+	 */
 	public function __construct(array $options = []) {
 		$this->options = array_merge($this->options, $options);
 		$this->stack = HandlerStack::create();
 		$this->stack->push(ErrorMiddleware::error());
 
+		// Set authentication token header
 		$token = $this->options['api_token'];
 		$this->stack->push(Middleware::mapRequest(function (RequestInterface $request) use ($token) {
 			return (new AuthMiddleware($token))->addAuthHeader($request);
@@ -44,23 +57,38 @@ class Client implements HttpRequestInterface, ClientInterface {
 		}
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	public function get(string $url = '', array $parameters = []) {
 		return $this->sendRequest($url, $parameters, 'GET');
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	public function post(string $url = '', array $parameters = []) {
 		return $this->sendRequest($url, $parameters, 'POST');
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	public function patch(string $url = '', array $parameters = []) {
 		return $this->sendRequest($url, $parameters, 'PATCH');
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	public function delete(string $url = '', array $parameters = []) {
 		return $this->sendRequest($url, $parameters, 'DELETE');
 	}
 
-	public function sendRequest(string $url = '', array $parameters = [], $method = 'GET') {
+	/**
+	 * {@inheritDoc}
+	 */
+	public function sendRequest(string $url = '', array $parameters = [], string $method = 'GET') {
 		$options = [];
 
 		if (!empty($parameters['headers'])) {
@@ -75,13 +103,16 @@ class Client implements HttpRequestInterface, ClientInterface {
 			$options['json'] = $parameters['json'];
 		}
 
-		if (in_array($method, ['POST', 'DELETE'])) {
+		if (in_array($method, ['POST', 'PATCH', 'DELETE'])) {
 			$options['form_params'] = $parameters;
 		}
 
 		return $this->client->request($method, $url, $options);
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	public function parseResponse($response) {
 		$responseBody = ['error' => 'Unknown error.'];
 

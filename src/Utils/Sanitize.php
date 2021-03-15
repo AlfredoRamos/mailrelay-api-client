@@ -11,6 +11,15 @@
 namespace AlfredoRamos\Mailrelay\Utils;
 
 class Sanitize {
+	/**
+	 * Remove reserved email headers.
+	 *
+	 * @param array $data Email data.
+	 *
+	 * @throws \InvalidArgumentException If email header list is not an array.
+	 *
+	 * @return array Sanitized email data.
+	 */
 	public function sanitizeEmailHeaders(array $data = []) {
 		if (empty($data['headers'])) {
 			return;

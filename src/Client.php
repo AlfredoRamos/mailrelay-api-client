@@ -13,11 +13,21 @@ namespace AlfredoRamos\Mailrelay;
 use AlfredoRamos\Mailrelay\Utils\Str;
 
 class Client {
+	/** @var array */
 	private $options = [
 		'api_account' => '',
 		'api_token' => ''
 	];
 
+	/**
+	 * Mailrelay client constructor.
+	 *
+	 * @param array $options Configuration options.
+	 *
+	 * @throws \InvalidArgumentException If configuration options is missing API data.
+	 *
+	 * @return void
+	 */
 	public function __construct(array $options = []) {
 		$missing = [];
 
@@ -48,6 +58,15 @@ class Client {
 		}
 	}
 
+	/**
+	 * Get class by given API endpoint.
+	 *
+	 * @param string $name API endpoint name.
+	 *
+	 * @throws \InvalidArgumentException If API endpoint class does not exist.
+	 *
+	 * @return mixed API endpoint class.
+	 */
 	public function api(string $name = '') {
 		$name = trim($name, " \n\r\t\v\0\/");
 		$apiClass = ucwords($name, '_');
@@ -61,6 +80,11 @@ class Client {
 		throw new \InvalidArgumentException('The requested API method is not supported or has not been implemented: ' . $apiClass);
 	}
 
+	/**
+	 * Get configuration options.
+	 *
+	 * @return array Configuration options.
+	 */
 	public function getOptions() {
 		return $this->options;
 	}

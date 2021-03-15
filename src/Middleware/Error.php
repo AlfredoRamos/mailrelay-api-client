@@ -14,12 +14,28 @@ use Psr\Http\Message\RequestInterface;
 use Psr\Http\Message\ResponseInterface;
 
 class Error {
+	/** @var callable */
 	private $nextHandler;
 
+	/**
+	 * Error middleware constructor.
+	 *
+	 * @param callable $nextHandler Next handler to invoke.
+	 *
+	 * @return void
+	 */
 	public function __construct(callable $nextHandler) {
 		$this->nextHandler = $nextHandler;
 	}
 
+	/**
+	 * Invoke a handler.
+	 *
+	 * @param \Psr\Http\Message\RequestInterface $request The HTTP request.
+	 * @param array $options
+	 *
+	 * @return \GuzzleHttp\Promise\PromiseInterface Request promise.
+	 */
 	public function __invoke(RequestInterface $request, array $options) {
 		$fn = $this->nextHandler;
 
@@ -28,12 +44,27 @@ class Error {
 		});
 	}
 
+	/**
+	 * Handle request errors.
+	 *
+	 * @return \Closure Function that accepts the next handler.
+	 */
 	public static function error() {
 		return function (callable $handler) {
 			return new self($handler);
 		};
 	}
 
+	/**
+	 * Check request errors
+	 *
+	 * @param \Psr\Http\Message\ResponseInterface The HTTP response.
+	 *
+	 * @throws \ErrorException		If HTTP request returned an error.
+	 * @throws \RuntimeException	If HTTP request returned an unknown error.
+	 *
+	 * @return \Psr\Http\Message\ResponseInterface The HTTP response.
+	 */
 	public function checkError(ResponseInterface $response) {
 		if ($response->getStatusCode() < 400) {
 			return $response;

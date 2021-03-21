@@ -13,7 +13,7 @@ namespace AlfredoRamos\Mailrelay\Tests;
 use PHPUnit\Framework\TestCase;
 use AlfredoRamos\Mailrelay\Client;
 
-class ClientText extends TestCase {
+class ClientTest extends TestCase {
 	public function testInstance() {
 		$client = new Client([
 			'api_account' => 'xyz',

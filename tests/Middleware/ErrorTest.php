@@ -8,7 +8,7 @@
  * @license GPL-3.0-or-later
  */
 
-namespace AlfredoRamos\Mailrelay\Tests;
+namespace AlfredoRamos\Mailrelay\Tests\Middleware;
 
 use PHPUnit\Framework\TestCase;
 use AlfredoRamos\Mailrelay\Middleware\Error as ErrorMiddleware;

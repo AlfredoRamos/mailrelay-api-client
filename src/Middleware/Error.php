@@ -37,9 +37,9 @@ class Error {
 	 * @return \GuzzleHttp\Promise\PromiseInterface Request promise.
 	 */
 	public function __invoke(RequestInterface $request, array $options) {
-		$fn = $this->nextHandler;
+		$handler = $this->nextHandler;
 
-		return $fn($request, $options)->then(function (ResponseInterface $response) {
+		return $handler($request, $options)->then(function (ResponseInterface $response) {
 			return $this->checkError($response);
 		});
 	}

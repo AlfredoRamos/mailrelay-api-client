@@ -71,6 +71,7 @@ class ClientTest extends TestCase {
 
 		$this->assertTrue(is_array($options));
 		$this->assertFalse(empty($options));
+		$this->assertStringNotContainsString('.ipzmarketing.com', $options['api_account']);
 	}
 
 	private function getApiClass(string $name = '') {

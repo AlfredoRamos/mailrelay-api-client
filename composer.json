@@ -2,7 +2,7 @@
 	"name": "alfredo-ramos/mailrelay-api-client",
 	"type": "library",
 	"description": "Mailrelay API Client",
-	"keywords": ["mailrelay"],
+	"keywords": ["mailrelay", "email", "client", "api"],
 	"homepage": "https://github.com/AlfredoRamos/mailrelay-api-client",
 	"license": "GPL-3.0-or-later",
 	"authors": [
@@ -10,16 +10,24 @@
 			"name": "Alfredo Ramos",
 			"email": "alfredo.ramos@yandex.com",
 			"homepage": "https://alfredoramos.mx",
-			"role": "Developer"
+			"role": "Lead Developer"
 		}
 	],
 	"require": {
 		"php": "^7.2.5 || ^8.0.0",
 		"guzzlehttp/guzzle": "^7.2.0"
 	},
+	"require-dev": {
+		"phpunit/phpunit": "^8.5.14 || ^9.5.2"
+	},
 	"autoload": {
 		"psr-4": {
 			"AlfredoRamos\\Mailrelay\\": "src/"
+		}
+	},
+	"autoload-dev": {
+		"psr-4": {
+			"AlfredoRamos\\Mailrelay\\Tests\\": "tests/"
 		}
 	}
 }

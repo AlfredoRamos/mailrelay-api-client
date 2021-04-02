@@ -4,7 +4,7 @@ A [Mailrelay](https://mailrelay.com) API client.
 
 [![Build Status](https://img.shields.io/github/workflow/status/AlfredoRamos/mailrelay-api-client/CI?style=flat-square)](https://github.com/AlfredoRamos/mailrelay-api-client/actions)
 [![Latest Stable Version](https://img.shields.io/packagist/v/alfredo-ramos/mailrelay-api-client.svg?style=flat-square&label=stable)](https://packagist.org/packages/alfredo-ramos/mailrelay-api-client)
-[![Code Quality](https://img.shields.io/codacy/grade/f6603a5728ba49e5856b702d15988dee.svg?style=flat-square)](https://app.codacy.com/manual/AlfredoRamos/mailrelay-api-client/dashboard)
+[![Code Quality](https://img.shields.io/codacy/grade/f6603a5728ba49e5856b702d15988dee.svg?style=flat-square)](https://app.codacy.com/gh/AlfredoRamos/mailrelay-api-client/dashboard)
 [![License](https://img.shields.io/packagist/l/alfredo-ramos/mailrelay-api-client.svg?style=flat-square)](https://raw.githubusercontent.com/AlfredoRamos/mailrelay-api-client/master/LICENSE)
 
 > :warning: **While all API endpoints have been implemented, it's still under development, so it might have some bugs.** :warning:

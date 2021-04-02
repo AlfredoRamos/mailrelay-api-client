@@ -10,8 +10,6 @@
 
 namespace AlfredoRamos\Mailrelay;
 
-use AlfredoRamos\Mailrelay\Utils\Str;
-
 class Client {
 	/** @var array */
 	private $options = [
@@ -31,18 +29,18 @@ class Client {
 	public function __construct(array $options = []) {
 		$missing = [];
 
-		foreach ($this->options as $key => $value) {
+		foreach (array_keys($this->options) as $key) {
+			if (!is_string($key)) {
+				continue;
+			}
+
 			if (empty($options[$key])) {
 				$missing[] = $key;
 				continue;
 			}
 
 			if ($key === 'api_account') {
-				$suffix = '.ipzmarketing.com';
-
-				if (Str::endsWith($options[$key], $suffix)) {
-					$options[$key] = str_replace($suffix, '', $options[$key]);
-				}
+				$options[$key] = str_replace('.ipzmarketing.com', '', $options[$key]);
 			}
 
 			if (empty($options[$key])) {

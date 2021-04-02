@@ -134,12 +134,11 @@ class Subscribers extends AbstractApi {
 	/**
 	 * Get deleted subscribers.
 	 *
-	 * @param int	$itemId	Item ID.
-	 * @param array	$data	Request parameters.
+	 * @param array	$data Request parameters.
 	 *
 	 * @return array Response data.
 	 */
-	public function deleted() {
+	public function deleted(array $data = []) {
 		return $this->request->get('subscribers/deleted', ['query' => $data]);
 	}
 

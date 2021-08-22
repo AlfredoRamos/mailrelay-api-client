@@ -55,4 +55,4 @@ $mailrelay->api('subscribers')->sync([
 $mailrelay->api('package')->info();
 ```
 
-For more detailed information about Mailrelay API endpoints, please refer to the [official API documentation](https://account.ipzmarketing.com/api-documentation/).
+For more detailed information about Mailrelay API endpoints, please refer to the [official API documentation](https://apidocs.mailrelay.com).

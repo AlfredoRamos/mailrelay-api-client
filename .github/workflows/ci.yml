@@ -15,7 +15,7 @@ jobs:
         php-version: ['7.2', '7.3', '7.4', '8.0']
     steps:
       - name: Checkout sources
-        uses: actions/checkout@master
+        uses: actions/checkout@v2
 
       - name: Setup PHP
         uses: shivammathur/setup-php@v2

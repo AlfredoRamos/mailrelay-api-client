@@ -12,7 +12,7 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        php-version: ['7.2', '7.3', '7.4', '8.0']
+        php-version: ['7.2', '7.3', '7.4', '8.0', '8.1']
     steps:
       - name: Checkout sources
         uses: actions/checkout@v2
@@ -26,8 +26,7 @@ jobs:
 
       - name: Setup Composer
         id: setup-composer
-        run: |
-          echo "::set-output name=dir::$(composer config cache-files-dir)"
+        run: echo "::set-output name=dir::$(composer config cache-files-dir)"
 
       - name: Setup cache
         uses: actions/cache@v2
@@ -44,9 +43,9 @@ jobs:
         run: vendor/bin/phpunit
 
       - name: Send code coverage
-        if: ${{ success() }}
+        if: ${{ !startsWith(matrix.php-version, '7.2') && success() }}
         continue-on-error: true
-        uses: codacy/codacy-coverage-reporter-action@master
+        uses: codacy/codacy-coverage-reporter-action@v1
         with:
           project-token: ${{ secrets.CODACY_PROJECT_TOKEN }}
           coverage-reports: build/log/clover.xml

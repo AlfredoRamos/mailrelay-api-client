@@ -10,13 +10,4 @@
 
 namespace AlfredoRamos\Mailrelay\Api;
 
-class Package extends AbstractApi {
-	/**
-	 * Get account package info.
-	 *
-	 * @return array Response data.
-	 */
-	public function info(): array {
-		return $this->request->get('package');
-	}
-}
+interface ApiEndpointInterface {}

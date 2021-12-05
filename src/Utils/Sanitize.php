@@ -20,7 +20,7 @@ class Sanitize {
 	 *
 	 * @return array Sanitized email data.
 	 */
-	public function sanitizeEmailHeaders(array $data = []) {
+	public function sanitizeEmailHeaders(array $data = []): array {
 		if (empty($data['headers'])) {
 			return $data;
 		}

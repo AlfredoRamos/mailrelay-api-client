@@ -18,7 +18,7 @@ class UnsubscribeEvents extends AbstractApi {
 	 *
 	 * @return array Response data.
 	 */
-	public function list(array $data = []) {
+	public function list(array $data = []): array {
 		return $this->request->get('unsubscribe_events', ['query' => $data]);
 	}
 
@@ -31,7 +31,7 @@ class UnsubscribeEvents extends AbstractApi {
 	 *
 	 * @return array Response data.
 	 */
-	public function add(array $data = []) {
+	public function add(array $data = []): array {
 		$this->validator->validateEmptyFields($data);
 		$required = ['sent_email_id'];
 		$this->validator->validateRequiredFields($required, $data);
@@ -46,7 +46,7 @@ class UnsubscribeEvents extends AbstractApi {
 	 *
 	 * @return array Response data.
 	 */
-	public function get(int $itemId = 0) {
+	public function get(int $itemId = 0): array {
 		return $this->request->get(sprintf('unsubscribe_events/%d', $itemId));
 	}
 
@@ -57,7 +57,7 @@ class UnsubscribeEvents extends AbstractApi {
 	 *
 	 * @return array Response data.
 	 */
-	public function delete(int $itemId = 0) {
+	public function delete(int $itemId = 0): array {
 		return $this->request->delete(sprintf('unsubscribe_events/%d', $itemId));
 	}
 }

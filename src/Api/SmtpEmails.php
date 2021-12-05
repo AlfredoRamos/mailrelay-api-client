@@ -18,7 +18,7 @@ class SmtpEmails extends AbstractApi {
 	 *
 	 * @return array Response data.
 	 */
-	public function list(array $data = []) {
+	public function list(array $data = []): array {
 		return $this->request->get('smtp_emails', ['query' => $data]);
 	}
 
@@ -30,7 +30,7 @@ class SmtpEmails extends AbstractApi {
 	 *
 	 * @return array Response data.
 	 */
-	public function get(int $itemId = 0, array $data = []) {
+	public function get(int $itemId = 0, array $data = []): array {
 		return $this->request->get(
 			sprintf('smtp_emails/%d', $itemId),
 			['query' => $data]

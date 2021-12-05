@@ -11,6 +11,7 @@
 namespace AlfredoRamos\Mailrelay\Tests\Http;
 
 use AlfredoRamos\Mailrelay\Http\Client as HttpClient;
+use GuzzleHttp\Client as GuzzleClient;
 use GuzzleHttp\ClientInterface;
 
 class TestHttpClient extends HttpClient {

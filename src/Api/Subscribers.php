@@ -18,7 +18,7 @@ class Subscribers extends AbstractApi {
 	 *
 	 * @return array Response data.
 	 */
-	public function list(array $data = []) {
+	public function list(array $data = []): array {
 		return $this->request->get('subscribers', ['query' => $data]);
 	}
 
@@ -31,7 +31,7 @@ class Subscribers extends AbstractApi {
 	 *
 	 * @return array Response data.
 	 */
-	public function add(array $data = []) {
+	public function add(array $data = []): array {
 		$this->validator->validateEmptyFields($data);
 		$required = [
 			'status',
@@ -50,7 +50,7 @@ class Subscribers extends AbstractApi {
 	 *
 	 * @return array Response data.
 	 */
-	public function get(int $itemId = 0, array $data = []) {
+	public function get(int $itemId = 0, array $data = []): array {
 		return $this->request->get(
 			sprintf('subscribers/%d', $itemId),
 			['query' => $data]
@@ -64,7 +64,7 @@ class Subscribers extends AbstractApi {
 	 *
 	 * @return array Response data.
 	 */
-	public function delete(int $itemId = 0) {
+	public function delete(int $itemId = 0): array {
 		return $this->request->delete(sprintf('subscribers/%d', $itemId));
 	}
 
@@ -78,7 +78,7 @@ class Subscribers extends AbstractApi {
 	 *
 	 * @return array Response data.
 	 */
-	public function update(int $itemId = 0, array $data = []) {
+	public function update(int $itemId = 0, array $data = []): array {
 		$this->validator->validateEmptyFields($data);
 
 		return $this->request->patch(
@@ -94,7 +94,7 @@ class Subscribers extends AbstractApi {
 	 *
 	 * @return array Response data.
 	 */
-	public function ban(int $itemId = 0) {
+	public function ban(int $itemId = 0): array {
 		return $this->request->patch(sprintf('subscribers/%d/ban', $itemId));
 	}
 
@@ -105,7 +105,7 @@ class Subscribers extends AbstractApi {
 	 *
 	 * @return array Response data.
 	 */
-	public function resendConfirmation(int $itemId = 0) {
+	public function resendConfirmation(int $itemId = 0): array {
 		return $this->request->post(sprintf('subscribers/%d/resend_confirmation_email', $itemId));
 	}
 
@@ -116,7 +116,7 @@ class Subscribers extends AbstractApi {
 	 *
 	 * @return array Response data.
 	 */
-	public function restore(int $itemId = 0) {
+	public function restore(int $itemId = 0): array {
 		return $this->request->patch(sprintf('subscribers/%d/restore', $itemId));
 	}
 
@@ -127,7 +127,7 @@ class Subscribers extends AbstractApi {
 	 *
 	 * @return array Response data.
 	 */
-	public function unban(int $itemId = 0) {
+	public function unban(int $itemId = 0): array {
 		return $this->request->patch(sprintf('subscribers/%d/unban', $itemId));
 	}
 
@@ -138,7 +138,7 @@ class Subscribers extends AbstractApi {
 	 *
 	 * @return array Response data.
 	 */
-	public function deleted(array $data = []) {
+	public function deleted(array $data = []): array {
 		return $this->request->get('subscribers/deleted', ['query' => $data]);
 	}
 
@@ -151,7 +151,7 @@ class Subscribers extends AbstractApi {
 	 *
 	 * @return array Response data.
 	 */
-	public function sync(array $data = []) {
+	public function sync(array $data = []): array {
 		$this->validator->validateEmptyFields($data);
 		$required = [
 			'status',

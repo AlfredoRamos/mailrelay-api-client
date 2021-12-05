@@ -18,7 +18,7 @@ class SentCampaigns extends AbstractApi {
 	 *
 	 * @return array Response data.
 	 */
-	public function list(array $data = []) {
+	public function list(array $data = []): array {
 		return $this->request->get('sent_campaigns', ['query' => $data]);
 	}
 
@@ -29,7 +29,7 @@ class SentCampaigns extends AbstractApi {
 	 *
 	 * @return array Response data.
 	 */
-	public function get(int $itemId = 0) {
+	public function get(int $itemId = 0): array {
 		return $this->request->get(sprintf('sent_campaigns/%d', $itemId));
 	}
 
@@ -40,7 +40,7 @@ class SentCampaigns extends AbstractApi {
 	 *
 	 * @return array Response data.
 	 */
-	public function cancel(int $itemId = 0) {
+	public function cancel(int $itemId = 0): array {
 		return $this->request->patch(sprintf('sent_campaigns/%d/cancel', $itemId));
 	}
 
@@ -52,7 +52,7 @@ class SentCampaigns extends AbstractApi {
 	 *
 	 * @return array Response data.
 	 */
-	public function clicks(int $itemId = 0, array $data = []) {
+	public function clicks(int $itemId = 0, array $data = []): array {
 		return $this->request->get(
 			sprintf('sent_campaigns/%d/clicks', $itemId),
 			['query' => $data]
@@ -67,7 +67,7 @@ class SentCampaigns extends AbstractApi {
 	 *
 	 * @return array Response data.
 	 */
-	public function impressions(int $itemId = 0, array $data = []) {
+	public function impressions(int $itemId = 0, array $data = []): array {
 		return $this->request->get(
 			sprintf('sent_campaigns/%d/impressions', $itemId),
 			['query' => $data]
@@ -81,7 +81,7 @@ class SentCampaigns extends AbstractApi {
 	 *
 	 * @return array Response data.
 	 */
-	public function pause(int $itemId = 0) {
+	public function pause(int $itemId = 0): array {
 		return $this->request->patch(sprintf('sent_campaigns/%d/pause', $itemId));
 	}
 
@@ -92,7 +92,7 @@ class SentCampaigns extends AbstractApi {
 	 *
 	 * @return array Response data.
 	 */
-	public function resume(int $itemId = 0) {
+	public function resume(int $itemId = 0): array {
 		return $this->request->patch(sprintf('sent_campaigns/%d/resume', $itemId));
 	}
 
@@ -104,7 +104,7 @@ class SentCampaigns extends AbstractApi {
 	 *
 	 * @return array Response data.
 	 */
-	public function emails(int $itemId = 0, array $data = []) {
+	public function emails(int $itemId = 0, array $data = []): array {
 		return $this->request->get(
 			sprintf('sent_campaigns/%d/sent_emails', $itemId),
 			['query' => $data]
@@ -119,7 +119,7 @@ class SentCampaigns extends AbstractApi {
 	 *
 	 * @return array Response data.
 	 */
-	public function unsubscribeEvents(int $itemId = 0, array $data = []) {
+	public function unsubscribeEvents(int $itemId = 0, array $data = []): array {
 		return $this->request->get(
 			sprintf('sent_campaigns/%d/unsubscribe_events', $itemId),
 			['query' => $data]

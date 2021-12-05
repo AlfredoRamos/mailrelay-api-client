@@ -18,7 +18,7 @@ class AbTests extends AbstractApi {
 	 *
 	 * @return array Response data.
 	 */
-	public function list(array $data = []) {
+	public function list(array $data = []): array {
 		return $this->request->get('ab_tests', ['query' => $data]);
 	}
 
@@ -31,7 +31,7 @@ class AbTests extends AbstractApi {
 	 *
 	 * @return array Response data.
 	 */
-	public function add(array $data = []) {
+	public function add(array $data = []): array {
 		$this->validator->validateEmptyFields($data);
 		$required = [
 			'campaign_id',
@@ -51,7 +51,7 @@ class AbTests extends AbstractApi {
 	 *
 	 * @return array Response data.
 	 */
-	public function get(int $itemId = 0) {
+	public function get(int $itemId = 0): array {
 		return $this->request->get(sprintf('ab_tests/%d', $itemId));
 	}
 
@@ -62,7 +62,7 @@ class AbTests extends AbstractApi {
 	 *
 	 * @return array Response data.
 	 */
-	public function delete(int $itemId = 0) {
+	public function delete(int $itemId = 0): array {
 		return $this->request->delete(sprintf('ab_tests/%d', $itemId));
 	}
 
@@ -73,7 +73,7 @@ class AbTests extends AbstractApi {
 	 *
 	 * @return array Response data.
 	 */
-	public function cancel(int $itemId = 0) {
+	public function cancel(int $itemId = 0): array {
 		return $this->request->patch(sprintf('ab_tests/%d/cancel', $itemId));
 	}
 
@@ -87,7 +87,7 @@ class AbTests extends AbstractApi {
 	 *
 	 * @return array Response data.
 	 */
-	public function choose(int $itemId = 0, array $data = []) {
+	public function choose(int $itemId = 0, array $data = []): array {
 		$this->validator->validateEmptyFields($data);
 		$required = ['combination'];
 		$this->validator->validateRequiredFields($required, $data);
@@ -105,7 +105,7 @@ class AbTests extends AbstractApi {
 	 *
 	 * @return array Response data.
 	 */
-	public function manual(int $itemId = 0) {
+	public function manual(int $itemId = 0): array {
 		return $this->request->patch(sprintf('ab_tests/%d/set_as_manual', $itemId));
 	}
 }

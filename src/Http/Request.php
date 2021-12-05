@@ -32,7 +32,7 @@ class Request implements RequestInterface {
 	/**
 	 * {@inheritDoc}
 	 */
-	public function get(string $url = '', array $parameters = []) {
+	public function get(string $url = '', array $parameters = []): array {
 		$response = $this->httpClient->get($url, $parameters);
 
 		return $this->httpClient->parseResponse($response);
@@ -41,7 +41,7 @@ class Request implements RequestInterface {
 	/**
 	 * {@inheritDoc}
 	 */
-	public function post(string $url = '', array $parameters = []) {
+	public function post(string $url = '', array $parameters = []): array {
 		$response = $this->httpClient->post($url, $parameters);
 
 		return $this->httpClient->parseResponse($response);
@@ -50,7 +50,7 @@ class Request implements RequestInterface {
 	/**
 	 * {@inheritDoc}
 	 */
-	public function patch(string $url = '', array $parameters = []) {
+	public function patch(string $url = '', array $parameters = []): array {
 		$response = $this->httpClient->patch($url, $parameters);
 
 		return $this->httpClient->parseResponse($response);
@@ -59,7 +59,7 @@ class Request implements RequestInterface {
 	/**
 	 * {@inheritDoc}
 	 */
-	public function delete(string $url = '', array $parameters = []) {
+	public function delete(string $url = '', array $parameters = []): array {
 		$response = $this->httpClient->delete($url, $parameters);
 
 		return $this->httpClient->parseResponse($response);

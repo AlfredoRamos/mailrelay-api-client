@@ -10,16 +10,16 @@
 
 namespace AlfredoRamos\Mailrelay\Http;
 
-use AlfredoRamos\Mailrelay\Http\RequestInterface as HttpRequestInterface;
 use AlfredoRamos\Mailrelay\Middleware\Auth as AuthMiddleware;
 use AlfredoRamos\Mailrelay\Middleware\Error as ErrorMiddleware;
 use GuzzleHttp\Client as GuzzleClient;
 use GuzzleHttp\HandlerStack;
 use GuzzleHttp\Middleware;
 use Psr\Http\Message\RequestInterface;
+use Psr\Http\Message\ResponseInterface;
 
-class Client implements HttpRequestInterface, ClientInterface {
-	/** @var string */
+class Client implements ClientInterface {
+	/** @var array */
 	protected $options = [];
 
 	/** @var \GuzzleHttp\Client */
@@ -60,35 +60,35 @@ class Client implements HttpRequestInterface, ClientInterface {
 	/**
 	 * {@inheritDoc}
 	 */
-	public function get(string $url = '', array $parameters = []) {
+	public function get(string $url = '', array $parameters = []): ResponseInterface {
 		return $this->sendRequest($url, $parameters, 'GET');
 	}
 
 	/**
 	 * {@inheritDoc}
 	 */
-	public function post(string $url = '', array $parameters = []) {
+	public function post(string $url = '', array $parameters = []): ResponseInterface {
 		return $this->sendRequest($url, $parameters, 'POST');
 	}
 
 	/**
 	 * {@inheritDoc}
 	 */
-	public function patch(string $url = '', array $parameters = []) {
+	public function patch(string $url = '', array $parameters = []): ResponseInterface {
 		return $this->sendRequest($url, $parameters, 'PATCH');
 	}
 
 	/**
 	 * {@inheritDoc}
 	 */
-	public function delete(string $url = '', array $parameters = []) {
+	public function delete(string $url = '', array $parameters = []): ResponseInterface {
 		return $this->sendRequest($url, $parameters, 'DELETE');
 	}
 
 	/**
 	 * {@inheritDoc}
 	 */
-	public function sendRequest(string $url = '', array $parameters = [], string $method = 'GET') {
+	public function sendRequest(string $url = '', array $parameters = [], string $method = 'GET'): ResponseInterface {
 		$options = [];
 
 		if (!empty($parameters['headers'])) {
@@ -113,7 +113,7 @@ class Client implements HttpRequestInterface, ClientInterface {
 	/**
 	 * {@inheritDoc}
 	 */
-	public function parseResponse($response) {
+	public function parseResponse(ResponseInterface $response = null): array {
 		$responseBody = ['error' => 'Unknown error.'];
 
 		if ($response) {

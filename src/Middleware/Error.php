@@ -12,6 +12,7 @@ namespace AlfredoRamos\Mailrelay\Middleware;
 
 use Psr\Http\Message\RequestInterface;
 use Psr\Http\Message\ResponseInterface;
+use GuzzleHttp\Promise\PromiseInterface;
 
 class Error {
 	/** @var callable */
@@ -36,7 +37,7 @@ class Error {
 	 *
 	 * @return \GuzzleHttp\Promise\PromiseInterface Request promise.
 	 */
-	public function __invoke(RequestInterface $request, array $options) {
+	public function __invoke(RequestInterface $request, array $options): PromiseInterface {
 		$handler = $this->nextHandler;
 
 		return $handler($request, $options)->then(function (ResponseInterface $response) {
@@ -47,9 +48,9 @@ class Error {
 	/**
 	 * Handle request errors.
 	 *
-	 * @return \Closure Function that accepts the next handler.
+	 * @return callable Function that accepts the next handler.
 	 */
-	public static function error() {
+	public static function error(): callable {
 		return function (callable $handler) {
 			return new self($handler);
 		};
@@ -65,7 +66,7 @@ class Error {
 	 *
 	 * @return \Psr\Http\Message\ResponseInterface The HTTP response.
 	 */
-	public function checkError(ResponseInterface $response) {
+	public function checkError(ResponseInterface $response): ?ResponseInterface {
 		if ($response->getStatusCode() < 400) {
 			return $response;
 		}

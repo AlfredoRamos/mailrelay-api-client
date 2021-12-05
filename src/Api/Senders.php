@@ -18,7 +18,7 @@ class Senders extends AbstractApi {
 	 *
 	 * @return array Response data.
 	 */
-	public function list(array $data = []) {
+	public function list(array $data = []): array {
 		return $this->request->get('senders', ['query' => $data]);
 	}
 
@@ -31,7 +31,7 @@ class Senders extends AbstractApi {
 	 *
 	 * @return array Response data.
 	 */
-	public function add(array $data = []) {
+	public function add(array $data = []): array {
 		$this->validator->validateEmptyFields($data);
 		$required = [
 			'name',
@@ -49,7 +49,7 @@ class Senders extends AbstractApi {
 	 *
 	 * @return array Response data.
 	 */
-	public function get(int $itemId = 0) {
+	public function get(int $itemId = 0): array {
 		return $this->request->get(sprintf('senders/%d', $itemId));
 	}
 
@@ -63,7 +63,7 @@ class Senders extends AbstractApi {
 	 *
 	 * @return array Response data.
 	 */
-	public function delete(int $itemId = 0, array $data = []) {
+	public function delete(int $itemId = 0, array $data = []): array {
 		$this->validator->validateEmptyFields($data);
 		$required = ['new_sender_id'];
 		$this->validator->validateRequiredFields($required, $data);
@@ -84,7 +84,7 @@ class Senders extends AbstractApi {
 	 *
 	 * @return array Response data.
 	 */
-	public function update(int $itemId = 0, array $data = []) {
+	public function update(int $itemId = 0, array $data = []): array {
 		$this->validator->validateEmptyFields($data);
 
 		return $this->request->patch(
@@ -100,7 +100,7 @@ class Senders extends AbstractApi {
 	 *
 	 * @return array Response data.
 	 */
-	public function sendConfirmation(int $itemId = 0) {
+	public function sendConfirmation(int $itemId = 0): array {
 		return $this->request->post(sprintf('senders/%d/send_confirmation_email', $itemId));
 	}
 }

@@ -20,7 +20,7 @@ class SendEmails extends AbstractApi {
 	 *
 	 * @return array Response data.
 	 */
-	public function send(array $data = []) {
+	public function send(array $data = []): array {
 		$data = $this->sanitize->sanitizeEmailHeaders($data);
 		$this->validator->validateEmptyFields($data);
 		$required = [

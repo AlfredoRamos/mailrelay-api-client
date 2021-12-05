@@ -18,7 +18,7 @@ class MediaFiles extends AbstractApi {
 	 *
 	 * @return array Response data.
 	 */
-	public function list(array $data = []) {
+	public function list(array $data = []): array {
 		return $this->request->get('media_files', ['query' => $data]);
 	}
 
@@ -31,7 +31,7 @@ class MediaFiles extends AbstractApi {
 	 *
 	 * @return array Response data.
 	 */
-	public function add(array $data = []) {
+	public function add(array $data = []): array {
 		$this->validator->validateEmptyFields($data);
 		$required = [
 			'file' => ['name', 'content']
@@ -48,7 +48,7 @@ class MediaFiles extends AbstractApi {
 	 *
 	 * @return array Response data.
 	 */
-	public function get(int $itemId = 0) {
+	public function get(int $itemId = 0): array {
 		return $this->request->get(sprintf('media_files/%d', $itemId));
 	}
 
@@ -59,7 +59,7 @@ class MediaFiles extends AbstractApi {
 	 *
 	 * @return array Response data.
 	 */
-	public function delete(int $itemId = 0) {
+	public function delete(int $itemId = 0): array {
 		return $this->request->delete(sprintf('media_files/%d', $itemId));
 	}
 
@@ -70,7 +70,7 @@ class MediaFiles extends AbstractApi {
 	 *
 	 * @return array Response data.
 	 */
-	public function trash(int $itemId = 0) {
+	public function trash(int $itemId = 0): array {
 		return $this->request->patch(sprintf('media_files/%d/move_to_trash', $itemId));
 	}
 
@@ -81,7 +81,7 @@ class MediaFiles extends AbstractApi {
 	 *
 	 * @return array Response data.
 	 */
-	public function restore(int $itemId = 0) {
+	public function restore(int $itemId = 0): array {
 		return $this->request->patch(sprintf('media_files/%d/restore', $itemId));
 	}
 
@@ -92,7 +92,7 @@ class MediaFiles extends AbstractApi {
 	 *
 	 * @return array Response data.
 	 */
-	public function trashed(array $data = []) {
+	public function trashed(array $data = []): array {
 		return $this->request->get('media_files/trashed', ['query' => $data]);
 	}
 }

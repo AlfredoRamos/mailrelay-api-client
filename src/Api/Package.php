@@ -16,7 +16,7 @@ class Package extends AbstractApi {
 	 *
 	 * @return array Response data.
 	 */
-	public function info() {
+	public function info(): array {
 		return $this->request->get('package');
 	}
 }

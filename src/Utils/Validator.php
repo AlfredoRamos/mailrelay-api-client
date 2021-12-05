@@ -20,7 +20,7 @@ class Validator {
 	 *
 	 * @return void
 	 */
-	public function validateEmptyFields(array $data = []) {
+	public function validateEmptyFields(array $data = []): void {
 		if (!empty($data)) {
 			return;
 		}
@@ -37,7 +37,7 @@ class Validator {
 	 *
 	 * @return void
 	 */
-	public function validateRequiredFields(array $required = [], array $data = []) {
+	public function validateRequiredFields(array $required = [], array $data = []): void {
 		if (empty($required)) {
 			throw new \InvalidArgumentException('Invalid required field list.');
 		}

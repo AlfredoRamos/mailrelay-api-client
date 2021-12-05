@@ -18,7 +18,7 @@ class RssCampaigns extends AbstractApi {
 	 *
 	 * @return array Response data.
 	 */
-	public function list(array $data = []) {
+	public function list(array $data = []): array {
 		return $this->request->get('rss_campaigns', ['query' => $data]);
 	}
 
@@ -31,7 +31,7 @@ class RssCampaigns extends AbstractApi {
 	 *
 	 * @return array Response data.
 	 */
-	public function add(array $data = []) {
+	public function add(array $data = []): array {
 		$this->validator->validateEmptyFields($data);
 		$required = [
 			'sender_id',
@@ -54,7 +54,7 @@ class RssCampaigns extends AbstractApi {
 	 *
 	 * @return array Response data.
 	 */
-	public function get(int $itemId = 0) {
+	public function get(int $itemId = 0): array {
 		return $this->request->get(sprintf('rss_campaigns/%d', $itemId));
 	}
 
@@ -65,7 +65,7 @@ class RssCampaigns extends AbstractApi {
 	 *
 	 * @return array Response data.
 	 */
-	public function delete(int $itemId = 0) {
+	public function delete(int $itemId = 0): array {
 		return $this->request->delete(sprintf('rss_campaigns/%d', $itemId));
 	}
 
@@ -79,7 +79,7 @@ class RssCampaigns extends AbstractApi {
 	 *
 	 * @return array Response data.
 	 */
-	public function update(int $itemId = 0, array $data = []) {
+	public function update(int $itemId = 0, array $data = []): array {
 		$this->validator->validateEmptyFields($data);
 
 		return $this->request->patch(
@@ -96,7 +96,7 @@ class RssCampaigns extends AbstractApi {
 	 *
 	 * @return array Response data.
 	 */
-	public function processed(int $itemId = 0, array $data = []) {
+	public function processed(int $itemId = 0, array $data = []): array {
 		return $this->request->get(
 			sprintf('rss_campaigns/%d/processed_entries', $itemId),
 			['query' => $data]

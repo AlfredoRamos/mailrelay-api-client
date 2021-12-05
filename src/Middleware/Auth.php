@@ -34,7 +34,7 @@ class Auth {
 	 *
 	 * @return \Psr\Http\Message\RequestInterface The HTTP request with the authentication token header.
 	 */
-	public function addAuthHeader(RequestInterface $request) {
+	public function addAuthHeader(RequestInterface $request): RequestInterface {
 		return $request->withHeader('X-Auth-Token', $this->token);
 	}
 }

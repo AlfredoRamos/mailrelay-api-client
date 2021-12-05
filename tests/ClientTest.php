@@ -12,6 +12,7 @@ namespace AlfredoRamos\Mailrelay\Tests;
 
 use PHPUnit\Framework\TestCase;
 use AlfredoRamos\Mailrelay\Client;
+use AlfredoRamos\Mailrelay\Api\ApiEndpointInterface;
 
 class ClientTest extends TestCase {
 	public function testInstance() {
@@ -57,7 +58,9 @@ class ClientTest extends TestCase {
 		foreach ($endpoints as $endpoint) {
 			$apiClass = $this->getApiClass($endpoint);
 			$this->assertTrue(class_exists($apiClass));
+			$this->assertTrue(interface_exists(ApiEndpointInterface::class));
 			$this->assertInstanceOf($apiClass, $client->api($endpoint));
+			$this->assertInstanceOf(ApiEndpointInterface::class, $client->api($endpoint));
 		}
 	}
 
@@ -74,7 +77,7 @@ class ClientTest extends TestCase {
 		$this->assertStringNotContainsString('.ipzmarketing.com', $options['api_account']);
 	}
 
-	private function getApiClass(string $name = '') {
+	private function getApiClass(string $name = ''): string {
 		$name = trim($name, " \n\r\t\v\0\/");
 		$apiClass = ucwords($name, '_');
 		$apiClass = str_replace('_', '', $apiClass);

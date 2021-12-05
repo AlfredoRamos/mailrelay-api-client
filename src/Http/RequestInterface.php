@@ -20,9 +20,9 @@ interface RequestInterface {
 	 * @param string	$url		The URL to send the request to.
 	 * @param array		$parameters	The request parameters.
 	 *
-	 * @return \Psr7\Http\Message\RequestInterface The HTTP request.
+	 * @return array
 	 */
-	public function get(string $url = '', array $parameters = []);
+	public function get(string $url = '', array $parameters = []): array;
 
 	/**
 	 * Send HTTP POST request.
@@ -30,9 +30,9 @@ interface RequestInterface {
 	 * @param string	$url		The URL to send the request to.
 	 * @param array		$parameters	The request parameters.
 	 *
-	 * @return \Psr7\Http\Message\RequestInterface The HTTP request.
+	 * @return array
 	 */
-	public function post(string $url = '', array $parameters = []);
+	public function post(string $url = '', array $parameters = []): array;
 
 	/**
 	 * Send HTTP PATCH request.
@@ -40,9 +40,9 @@ interface RequestInterface {
 	 * @param string	$url		The URL to send the request to.
 	 * @param array		$parameters	The request parameters.
 	 *
-	 * @return \Psr7\Http\Message\RequestInterface The HTTP request.
+	 * @return array
 	 */
-	public function patch(string $url = '', array $parameters = []);
+	public function patch(string $url = '', array $parameters = []): array;
 
 	/**
 	 * Send HTTP DELETE request.
@@ -50,17 +50,18 @@ interface RequestInterface {
 	 * @param string	$url		The URL to send the request to.
 	 * @param array		$parameters	The request parameters.
 	 *
-	 * @return \Psr7\Http\Message\RequestInterface The HTTP request.
+	 * @return array
 	 */
-	public function delete(string $url = '', array $parameters = []);
+	public function delete(string $url = '', array $parameters = []): array;
 
 	/**
 	 * Send dynamic HTTP raw request.
+	 * 
 	 * @param string	$url		The URL to send the request to.
 	 * @param array		$parameters	The request parameters.
 	 * @param string	$method		The HTTP method (GET, POST, PATCH, DELETE).
 	 *
-	 * @return null|\Psr7\Http\Message\RequestInterface The HTTP request.
+	 * @return \Psr7\Http\Message\RequestInterface|null The HTTP request.
 	 */
-	public function raw(string $url = '', array $parameters = [], string $method = 'GET');
+	public function raw(string $url = '', array $parameters = [], string $method = 'GET'): RequestInterface|null;
 }

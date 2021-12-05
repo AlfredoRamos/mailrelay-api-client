@@ -18,7 +18,7 @@ class ApiBatches extends AbstractApi {
 	 *
 	 * @return array Response data.
 	 */
-	public function list(array $data = []) {
+	public function list(array $data = []): array {
 		return $this->request->get('api_batches', ['query' => $data]);
 	}
 
@@ -31,7 +31,7 @@ class ApiBatches extends AbstractApi {
 	 *
 	 * @return array Response data.
 	 */
-	public function add(array $data = []) {
+	public function add(array $data = []): array {
 		$this->validator->validateEmptyFields($data);
 		$required = [
 			'operations_attributes' => ['request_method', 'request_path']
@@ -49,7 +49,7 @@ class ApiBatches extends AbstractApi {
 	 *
 	 * @return array Response data.
 	 */
-	public function get(int $itemId = 0, array $data = []) {
+	public function get(int $itemId = 0, array $data = []): array {
 		return $this->request->get(
 			sprintf('api_batches/%d', $itemId),
 			['query' => $data]

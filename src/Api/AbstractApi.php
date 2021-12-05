@@ -15,7 +15,7 @@ use AlfredoRamos\Mailrelay\Http\Request;
 use AlfredoRamos\Mailrelay\Utils\Validator;
 use AlfredoRamos\Mailrelay\Utils\Sanitize;
 
-abstract class AbstractApi {
+abstract class AbstractApi implements ApiEndpointInterface {
 	/** @var \AlfredoRamos\Mailrelay\Http\Request */
 	protected $request;
 

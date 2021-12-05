@@ -18,7 +18,7 @@ class Imports extends AbstractApi {
 	 *
 	 * @return array Response data.
 	 */
-	public function list(array $data = []) {
+	public function list(array $data = []): array {
 		return $this->request->get('imports', ['query' => $data]);
 	}
 
@@ -31,7 +31,7 @@ class Imports extends AbstractApi {
 	 *
 	 * @return array Response data.
 	 */
-	public function add(array $data = []) {
+	public function add(array $data = []): array {
 		$this->validator->validateEmptyFields($data);
 		$required = [
 			'file' => ['name', 'content'],
@@ -49,7 +49,7 @@ class Imports extends AbstractApi {
 	 *
 	 * @return array Response data.
 	 */
-	public function get(int $itemId = 0) {
+	public function get(int $itemId = 0): array {
 		return $this->request->get(sprintf('imports/%d', $itemId));
 	}
 
@@ -60,7 +60,7 @@ class Imports extends AbstractApi {
 	 *
 	 * @return array Response data.
 	 */
-	public function cancel(int $itemId = 0) {
+	public function cancel(int $itemId = 0): array {
 		return $this->request->patch(sprintf('imports/%d/cancel', $itemId));
 	}
 
@@ -72,7 +72,7 @@ class Imports extends AbstractApi {
 	 *
 	 * @return array Response data.
 	 */
-	public function data(int $itemId = 0, array $data = []) {
+	public function data(int $itemId = 0, array $data = []): array {
 		return $this->request->get(
 			sprintf('imports/%d/data', $itemId),
 			['query' => $data]

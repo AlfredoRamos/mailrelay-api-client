@@ -10,23 +10,25 @@
 
 namespace AlfredoRamos\Mailrelay\Http;
 
-use AlfredoRamos\Mailrelay\Http\RequestInterface as HttpRequestInterface;
 use AlfredoRamos\Mailrelay\Middleware\Auth as AuthMiddleware;
 use AlfredoRamos\Mailrelay\Middleware\Error as ErrorMiddleware;
+use AlfredoRamos\Mailrelay\Http\RequestInterface as HttpRequestInterface;
+use AlfredoRamos\Mailrelay\Http\ResponseInterface as HttpResponseInterface;
 use GuzzleHttp\Client as GuzzleClient;
 use GuzzleHttp\HandlerStack;
 use GuzzleHttp\Middleware;
 use Psr\Http\Message\RequestInterface;
+use Psr\Http\Message\ResponseInterface;
 
-class Client implements HttpRequestInterface, ClientInterface {
-	/** @var string */
-	protected $options = [];
+class Client implements ClientInterface {
+	/** @var array */
+	protected array $options = [];
 
 	/** @var \GuzzleHttp\Client */
-	protected $client;
+	protected GuzzleClient $client;
 
 	/** @var \GuzzleHttp\HandlerStack */
-	protected $stack;
+	protected HandlerStack $stack;
 
 	/**
 	 * HTTP client constructor.
@@ -64,7 +66,7 @@ class Client implements HttpRequestInterface, ClientInterface {
 	 *
 	 * @return $this
 	 */
-	public function withOptions(array $options = []) {
+	public function withOptions(array $options = []): self {
 		unset($options['api_token'], $options['api_account']);
 
 		$this->options = array_merge($this->options, $options);
@@ -75,39 +77,39 @@ class Client implements HttpRequestInterface, ClientInterface {
 	/**
 	 * {@inheritDoc}
 	 */
-	public function get(string $url = '', array $parameters = []) {
+	public function get(string $url = '', array $parameters = []): ResponseInterface {
 		return $this->sendRequest($url, $parameters, 'GET');
 	}
 
 	/**
 	 * {@inheritDoc}
 	 */
-	public function post(string $url = '', array $parameters = []) {
+	public function post(string $url = '', array $parameters = []): ResponseInterface {
 		return $this->sendRequest($url, $parameters, 'POST');
 	}
 
 	/**
 	 * {@inheritDoc}
 	 */
-	public function patch(string $url = '', array $parameters = []) {
+	public function patch(string $url = '', array $parameters = []): ResponseInterface {
 		return $this->sendRequest($url, $parameters, 'PATCH');
 	}
 
 	/**
 	 * {@inheritDoc}
 	 */
-	public function delete(string $url = '', array $parameters = []) {
+	public function delete(string $url = '', array $parameters = []): ResponseInterface {
 		return $this->sendRequest($url, $parameters, 'DELETE');
 	}
 
 	/**
 	 * {@inheritDoc}
 	 */
-	public function raw(string $url = '', array $parameters = [], string $method = 'GET') {
+	public function raw(string $url = '', array $parameters = [], string $method = 'GET'): ResponseInterface|null {
 		$method = trim(strtoupper($method));
 
 		if (empty($method) || !in_array($method, HttpRequestInterface::ALLOWED_METHODS, true)) {
-			return;
+			return null;
 		}
 
 		return $this->sendRequest($url, $parameters, $method);
@@ -116,7 +118,7 @@ class Client implements HttpRequestInterface, ClientInterface {
 	/**
 	 * {@inheritDoc}
 	 */
-	public function sendRequest(string $url = '', array $parameters = [], string $method = 'GET') {
+	public function sendRequest(string $url = '', array $parameters = [], string $method = 'GET'): ResponseInterface {
 		$options = [];
 
 		if (!empty($parameters['headers'])) {
@@ -141,7 +143,7 @@ class Client implements HttpRequestInterface, ClientInterface {
 	/**
 	 * {@inheritDoc}
 	 */
-	public function parseResponse($response) {
+	public function parseResponse(?ResponseInterface $response = null): HttpResponseInterface|array {
 		$responseBody = ['error' => 'Unknown error.'];
 
 		if ($response) {

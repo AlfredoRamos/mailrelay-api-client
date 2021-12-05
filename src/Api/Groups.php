@@ -18,7 +18,7 @@ class Groups extends AbstractApi {
 	 *
 	 * @return array Response data.
 	 */
-	public function list(array $data = []) {
+	public function list(array $data = []): array {
 		return $this->request->get('groups', ['query' => $data]);
 	}
 
@@ -31,7 +31,7 @@ class Groups extends AbstractApi {
 	 *
 	 * @return array Response data.
 	 */
-	public function add(array $data = []) {
+	public function add(array $data = []): array {
 		$this->validator->validateEmptyFields($data);
 		$required = ['name'];
 		$this->validator->validateRequiredFields($required, $data);
@@ -46,7 +46,7 @@ class Groups extends AbstractApi {
 	 *
 	 * @return array Response data.
 	 */
-	public function get(int $itemId = 0) {
+	public function get(int $itemId = 0): array {
 		return $this->request->get(sprintf('groups/%d', $itemId));
 	}
 
@@ -57,7 +57,7 @@ class Groups extends AbstractApi {
 	 *
 	 * @return array Response data.
 	 */
-	public function delete(int $itemId = 0) {
+	public function delete(int $itemId = 0): array {
 		return $this->request->delete(sprintf('groups/%d', $itemId));
 	}
 
@@ -71,7 +71,7 @@ class Groups extends AbstractApi {
 	 *
 	 * @return array Response data.
 	 */
-	public function update(int $itemId = 0, array $data = []) {
+	public function update(int $itemId = 0, array $data = []): array {
 		$this->validator->validateEmptyFields($data);
 
 		return $this->request->patch(

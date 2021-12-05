@@ -10,9 +10,11 @@
 
 namespace AlfredoRamos\Mailrelay;
 
+use AlfredoRamos\Mailrelay\Api\ApiEndpointInterface;
+
 class Client {
 	/** @var array */
-	private $options = [
+	private array $options = [
 		'api_account' => '',
 		'api_token' => ''
 	];
@@ -63,7 +65,7 @@ class Client {
 	 *
 	 * @return $this
 	 */
-	public function withOptions(array $options = []) {
+	public function withOptions(array $options = []): self {
 		unset($options['api_token'], $options['api_account']);
 
 		$this->options = array_merge($this->options, $options);
@@ -78,9 +80,9 @@ class Client {
 	 *
 	 * @throws \InvalidArgumentException If API endpoint class does not exist.
 	 *
-	 * @return mixed API endpoint class.
+	 * @return \AlfredoRamos\Mailrelay\Api\ApiEndpointInterface API endpoint class.
 	 */
-	public function api(string $name = '') {
+	public function api(string $name = ''): ApiEndpointInterface {
 		$name = trim($name, " \n\r\t\v\0\/");
 		$apiClass = ucwords($name, '_');
 		$apiClass = str_replace('_', '', $apiClass);
@@ -100,7 +102,7 @@ class Client {
 	 *
 	 * @return array Configuration options.
 	 */
-	public function getOptions($secrets = false) {
+	public function getOptions(bool $secrets = false): array {
 		if ($secrets !== true) {
 			$options = $this->options;
 			unset($options['api_token']);

@@ -64,4 +64,17 @@ class Request implements RequestInterface {
 
 		return $this->httpClient->parseResponse($response);
 	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	public function raw(string $url = '', array $parameters = [], string $method = 'GET') {
+		$method = trim(strtoupper($method));
+
+		if (empty($method) || !in_array($method, RequestInterface::ALLOWED_METHODS, true)) {
+			return;
+		}
+
+		return $this->httpClient->sendRequest($url, $parameters, $method);
+	}
 }

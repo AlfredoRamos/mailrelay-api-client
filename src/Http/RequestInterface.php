@@ -11,6 +11,9 @@
 namespace AlfredoRamos\Mailrelay\Http;
 
 interface RequestInterface {
+	/** @var array */
+	const ALLOWED_METHODS = ['GET', 'POST', 'PATCH', 'DELETE'];
+
 	/**
 	 * Send HTTP GET request.
 	 *
@@ -50,4 +53,14 @@ interface RequestInterface {
 	 * @return \Psr7\Http\Message\RequestInterface The HTTP request.
 	 */
 	public function delete(string $url = '', array $parameters = []);
+
+	/**
+	 * Send dynamic HTTP raw request.
+	 * @param string	$url		The URL to send the request to.
+	 * @param array		$parameters	The request parameters.
+	 * @param string	$method		The HTTP method (GET, POST, PATCH, DELETE).
+	 *
+	 * @return null|\Psr7\Http\Message\RequestInterface The HTTP request.
+	 */
+	public function raw(string $url = '', array $parameters = [], string $method = 'GET');
 }

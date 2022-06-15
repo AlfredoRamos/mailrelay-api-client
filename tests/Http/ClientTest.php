@@ -15,7 +15,6 @@ use AlfredoRamos\Mailrelay\Tests\Http\TestHttpClient as HttpClient;
 use GuzzleHttp\Client as GuzzleClient;
 use GuzzleHttp\Handler\MockHandler;
 use GuzzleHttp\HandlerStack;
-use GuzzleHttp\Psr7\Request;
 use GuzzleHttp\Psr7\Response;
 
 class ClientTest extends TestCase {
@@ -125,6 +124,24 @@ class ClientTest extends TestCase {
 		$client = new GuzzleClient(['handler' => $handler]);
 		$httpClient = new HttpClient($options, $client);
 		$response = $httpClient->delete('/path', ['param' => 'value']);
+
+		$this->assertSame(204, $response->getStatusCode());
+	}
+
+	public function testRawRequest() {
+		$options = [
+			'api_account' => 'test_account',
+			'api_token' => 'invalid_token'
+		];
+
+		$mock = new MockHandler([
+			new Response(204)
+		]);
+
+		$handler = HandlerStack::create($mock);
+		$client = new GuzzleClient(['handler' => $handler]);
+		$httpClient = new HttpClient($options, $client);
+		$response = $httpClient->raw('/path', ['param' => 'value'], 'GET');
 
 		$this->assertSame(204, $response->getStatusCode());
 	}

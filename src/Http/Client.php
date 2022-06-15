@@ -88,6 +88,19 @@ class Client implements HttpRequestInterface, ClientInterface {
 	/**
 	 * {@inheritDoc}
 	 */
+	public function raw(string $url = '', array $parameters = [], string $method = 'GET') {
+		$method = trim(strtoupper($method));
+
+		if (empty($method) || !in_array($method, HttpRequestInterface::ALLOWED_METHODS, true)) {
+			return;
+		}
+
+		return $this->sendRequest($url, $parameters, $method);
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
 	public function sendRequest(string $url = '', array $parameters = [], string $method = 'GET') {
 		$options = [];
 

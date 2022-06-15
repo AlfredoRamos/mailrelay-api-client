@@ -4,4 +4,5 @@ tests/ export-ignore
 phpunit.xml.dist export-ignore
 .gitignore export-ignore
 .gitattributes export-ignore
+.editorconfig export-ignore
 *.md export-ignore

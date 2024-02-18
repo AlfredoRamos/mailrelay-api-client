@@ -3,7 +3,7 @@
 /**
  * Mailrelay API Client.
  *
- * @author Alfredo Ramos <alfredo.ramos@protonmail.com>
+ * @author Alfredo Ramos <alfredo.ramos@proton.me>
  * @copyright 2021 Alfredo Ramos
  * @license GPL-3.0-or-later
  */

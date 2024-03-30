@@ -2,7 +2,7 @@
 
 A [Mailrelay](https://mailrelay.com) API client.
 
-[![Build Status](https://img.shields.io/github/workflow/status/AlfredoRamos/mailrelay-api-client/CI?style=flat-square)](https://github.com/AlfredoRamos/mailrelay-api-client/actions)
+[![Build Status](https://img.shields.io/github/actions/workflow/status/AlfredoRamos/mailrelay-api-client/ci.yml?style=flat-square)](https://github.com/AlfredoRamos/mailrelay-api-client/actions)
 [![Latest Stable Version](https://img.shields.io/packagist/v/alfredo-ramos/mailrelay-api-client.svg?style=flat-square&label=stable)](https://packagist.org/packages/alfredo-ramos/mailrelay-api-client)
 [![Code Quality](https://img.shields.io/codacy/grade/f6603a5728ba49e5856b702d15988dee.svg?style=flat-square)](https://app.codacy.com/gh/AlfredoRamos/mailrelay-api-client/dashboard)
 [![License](https://img.shields.io/packagist/l/alfredo-ramos/mailrelay-api-client.svg?style=flat-square)](https://raw.githubusercontent.com/AlfredoRamos/mailrelay-api-client/master/LICENSE)
@@ -36,10 +36,10 @@ $mailrelay = new AlfredoRamos\Mailrelay\Client([
 ]);
 ```
 
-Key | Type | Required | Description
-:-: | :-: | :-: | :-
-`api_account` | `string` | Yes | The account name you use to login into Mailrelay.
-`api_token` | `string` | Yes | The Mailrelay API token generated from `https://{ACCOUNT}.ipzmarketing.com/admin/api_keys`.
+|      Key      |   Type   | Required | Description                                                                                 |
+| :-----------: | :------: | :------: | :------------------------------------------------------------------------------------------ |
+| `api_account` | `string` |   Yes    | The account name you use to login into Mailrelay.                                           |
+|  `api_token`  | `string` |   Yes    | The Mailrelay API token generated from `https://{ACCOUNT}.ipzmarketing.com/admin/api_keys`. |
 
 You can access each endpoint using the `AlfredoRamos\Mailrelay\Client::api()` method.
 

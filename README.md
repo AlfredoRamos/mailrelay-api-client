@@ -18,7 +18,7 @@ A [Mailrelay](https://mailrelay.com) API client.
 Open your `composer.json` file and add the package in the `require` object:
 
 ```json
-"alfredo-ramos/mailrelay-api-client": "^0.1.0"
+"alfredo-ramos/mailrelay-api-client": "^0.2.0"
 ```
 
 Then run `composer update` on your terminal.

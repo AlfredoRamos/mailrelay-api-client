@@ -96,6 +96,8 @@ class Client {
 	/**
 	 * Get configuration options.
 	 *
+	 * @param bool $secrets Whether to include sensitive data.
+	 *
 	 * @return array Configuration options.
 	 */
 	public function getOptions($secrets = false) {

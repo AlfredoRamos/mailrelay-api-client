@@ -58,6 +58,21 @@ class Client implements HttpRequestInterface, ClientInterface {
 	}
 
 	/**
+	 * Set options for the request.
+	 *
+	 * @param array $options Options to set.
+	 *
+	 * @return $this
+	 */
+	public function withOptions(array $options = []) {
+		unset($options['api_token'], $options['api_account']);
+
+		$this->options = array_merge($this->options, $options);
+
+		return $this;
+	}
+
+	/**
 	 * {@inheritDoc}
 	 */
 	public function get(string $url = '', array $parameters = []) {
@@ -130,9 +145,15 @@ class Client implements HttpRequestInterface, ClientInterface {
 		$responseBody = ['error' => 'Unknown error.'];
 
 		if ($response) {
+			if (!empty($this->options['full_response']) && $this->options['full_response'] === true) {
+				unset($this->options['full_response']);
+				return new Response($response);
+			}
+
 			$responseBody = json_decode($response->getBody(), true);
 		}
 
+		unset($this->options['full_response']);
 		return $responseBody;
 	}
 }

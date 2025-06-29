@@ -67,7 +67,7 @@ class ClientTest extends TestCase {
 			'api_token' => 'abc'
 		]);
 
-		$options = $client->getOptions();
+		$options = $client->getOptions(true);
 
 		$this->assertTrue(is_array($options));
 		$this->assertFalse(empty($options));

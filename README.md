@@ -55,4 +55,15 @@ $mailrelay->api('subscribers')->sync([
 $mailrelay->api('package')->info();
 ```
 
+To get the number of total pages and results per page for `list()` methods:
+
+```php
+$result = $this->client->withOptions(['full_response' => true])->api('subscribers')->list([
+	'page' => 1, 'per_page' => 10
+]);
+$subscribers = $result->toArray();
+$total = $result->totalPages();
+$perPage = $result->perPage();
+```
+
 For more detailed information about Mailrelay API endpoints, please refer to the [official API documentation](https://apidocs.mailrelay.com).

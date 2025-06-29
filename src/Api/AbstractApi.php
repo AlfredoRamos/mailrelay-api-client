@@ -34,7 +34,7 @@ abstract class AbstractApi {
 	 */
 	public function __construct(Client $client) {
 		if (empty($this->request)) {
-			$this->request = new Request($client->getOptions());
+			$this->request = new Request($client->getOptions(true));
 		}
 
 		if (empty($this->validator)) {

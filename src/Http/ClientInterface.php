@@ -10,6 +10,8 @@
 
 namespace AlfredoRamos\Mailrelay\Http;
 
+use Psr\Http\Message\ResponseInterface;
+
 interface ClientInterface {
 	/**
 	 * Sent HTTP request.
@@ -29,5 +31,5 @@ interface ClientInterface {
 	 *
 	 * @return array The response body.
 	 */
-	public function parseResponse($response);
+	public function parseResponse(ResponseInterface $response);
 }

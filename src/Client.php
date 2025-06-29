@@ -57,6 +57,21 @@ class Client {
 	}
 
 	/**
+	 * Set options for the client requests.
+	 *
+	 * @param array $options Options to set.
+	 *
+	 * @return $this
+	 */
+	public function withOptions(array $options = []) {
+		unset($options['api_token'], $options['api_account']);
+
+		$this->options = array_merge($this->options, $options);
+
+		return $this;
+	}
+
+	/**
 	 * Get class by given API endpoint.
 	 *
 	 * @param string $name API endpoint name.
@@ -83,7 +98,14 @@ class Client {
 	 *
 	 * @return array Configuration options.
 	 */
-	public function getOptions() {
+	public function getOptions($secrets = false) {
+		if ($secrets !== true) {
+			$options = $this->options;
+			unset($options['api_token']);
+			unset($options['api_account']);
+			return $options;
+		}
+
 		return $this->options;
 	}
 }

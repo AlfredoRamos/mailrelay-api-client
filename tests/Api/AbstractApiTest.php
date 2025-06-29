@@ -16,7 +16,7 @@ use AlfredoRamos\Mailrelay\Http\Request;
 use AlfredoRamos\Mailrelay\Utils\Validator;
 use AlfredoRamos\Mailrelay\Utils\Sanitize;
 
-class AbstractApiTiest extends TestCase {
+class AbstractApiTest extends TestCase {
 	public function testHelperInstances() {
 		$client = new Client([
 			'api_account' => 'xyz',

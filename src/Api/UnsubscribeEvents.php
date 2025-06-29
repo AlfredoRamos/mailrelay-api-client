@@ -4,7 +4,7 @@
  * Mailrelay API Client.
  *
  * @author Alfredo Ramos <alfredo.ramos@proton.me>
- * @copyright 2021 Alfredo Ramos
+ * @copyright 2021 Alfredo Ramos (https://alfredoramos.mx)
  * @license GPL-3.0-or-later
  */
 

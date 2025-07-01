@@ -28,21 +28,21 @@ interface ResponseInterface
 	 *
 	 * @return array
 	 */
-	public function toArray();
+	public function toArray(): array;
 
 	/**
 	 * Get the response body as a JSON string.
 	 *
 	 * @return string
 	 */
-	public function toJson();
+	public function toJson(): string;
 
 	/**
 	 * Get the response headers.
 	 *
 	 * @return array
 	 */
-	public function getHeaders();
+	public function getHeaders(): array;
 
 	/**
 	 * Get a specific header value.
@@ -51,26 +51,26 @@ interface ResponseInterface
 	 *
 	 * @return array
 	 */
-	public function getHeader(string $name);
+	public function getHeader(string $name): array;
 
 	/**
 	 * Get the HTTP status code.
 	 *
 	 * @return int
 	 */
-	public function getStatusCode();
+	public function getStatusCode(): int;
 
 	/**
 	 * The total number of pages based on your parameters.
 	 *
 	 * @return int|null
 	 */
-	public function totalPages();
+	public function totalPages(): ?int;
 
 	/**
 	 * The number of records returned per page.
 	 *
 	 * @return int|null
 	 */
-	public function perPage();
+	public function perPage(): ?int;
 }

@@ -10,7 +10,10 @@
 
 namespace AlfredoRamos\Mailrelay\Http;
 
-interface RequestInterface {
+use Psr\Http\Message\ResponseInterface;
+
+interface RequestInterface
+{
 	/** @var array */
 	const ALLOWED_METHODS = ['GET', 'POST', 'PATCH', 'DELETE'];
 
@@ -56,12 +59,12 @@ interface RequestInterface {
 
 	/**
 	 * Send dynamic HTTP raw request.
-	 * 
+	 *
 	 * @param string	$url		The URL to send the request to.
 	 * @param array		$parameters	The request parameters.
 	 * @param string	$method		The HTTP method (GET, POST, PATCH, DELETE).
 	 *
-	 * @return \Psr7\Http\Message\RequestInterface|null The HTTP request.
+	 * @return \Psr\Http\Message\ResponseInterface|null The HTTP response.
 	 */
-	public function raw(string $url = '', array $parameters = [], string $method = 'GET'): RequestInterface|null;
+	public function raw(string $url = '', array $parameters = [], string $method = 'GET'): ?ResponseInterface;
 }

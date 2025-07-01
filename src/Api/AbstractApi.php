@@ -17,13 +17,13 @@ use AlfredoRamos\Mailrelay\Utils\Sanitize;
 
 abstract class AbstractApi implements ApiEndpointInterface {
 	/** @var \AlfredoRamos\Mailrelay\Http\Request */
-	protected $request;
+	protected Request $request;
 
 	/** @var \AlfredoRamos\Mailrelay\Utils\Validator */
-	protected $validator;
+	protected Validator $validator;
 
 	/** @var \AlfredoRamos\Mailrelay\Utils\Sanitize */
-	protected $sanitize;
+	protected Sanitize $sanitize;
 
 	/**
 	 * Abstract API constructor.

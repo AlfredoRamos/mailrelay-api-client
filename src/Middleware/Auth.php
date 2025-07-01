@@ -14,7 +14,7 @@ use Psr\Http\Message\RequestInterface;
 
 class Auth {
 	/**	@var string */
-	private $token;
+	private string $token;
 
 	/**
 	 * Auth middleware constructor.

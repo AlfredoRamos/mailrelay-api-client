@@ -18,7 +18,7 @@ class SignupForms extends AbstractApi {
 	 *
 	 * @return array Response data.
 	 */
-	public function list(array $data = []) {
+	public function list(array $data = []): array {
 		return $this->request->get('signup_forms', ['query' => $data]);
 	}
 }

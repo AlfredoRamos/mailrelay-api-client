@@ -105,8 +105,7 @@ class Client {
 	public function getOptions(bool $secrets = false): array {
 		if ($secrets !== true) {
 			$options = $this->options;
-			unset($options['api_token']);
-			unset($options['api_account']);
+			unset($options['api_token'], $options['api_account']);
 			return $options;
 		}
 

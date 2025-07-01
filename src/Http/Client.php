@@ -105,7 +105,7 @@ class Client implements ClientInterface {
 	/**
 	 * {@inheritDoc}
 	 */
-	public function raw(string $url = '', array $parameters = [], string $method = 'GET'): ResponseInterface|null {
+	public function raw(string $url = '', array $parameters = [], string $method = 'GET'): ?ResponseInterface {
 		$method = trim(strtoupper($method));
 
 		if (empty($method) || !in_array($method, HttpRequestInterface::ALLOWED_METHODS, true)) {

@@ -16,7 +16,7 @@ class Ping extends AbstractApi {
 	 *
 	 * @return array Response data.
 	 */
-	public function info() {
+	public function info(): array {
 		$response = $this->request->raw('ping');
 		$statusCode = $response->getStatusCode();
 		$statusMessage = '';

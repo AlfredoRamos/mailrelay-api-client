@@ -14,10 +14,10 @@ use Psr\Http\Message\ResponseInterface as PsrResponseInterface;
 
 class Response implements ResponseInterface {
 	/** @var \Psr\Http\Message\ResponseInterface */
-	protected $response;
+	protected PsrResponseInterface $response;
 
 	/** @var array */
-	private $allowedHeaders = ['Total', 'Per-Page'];
+	private array $allowedHeaders = ['Total', 'Per-Page'];
 
 	/**
 	 * {@inheritDoc}
@@ -29,21 +29,21 @@ class Response implements ResponseInterface {
 	/**
 	 * {@inheritDoc}
 	 */
-	public function toArray() {
+	public function toArray(): array {
 		return json_decode($this->response->getBody(), true);
 	}
 
 	/**
 	 * {@inheritDoc}
 	 */
-	public function toJson() {
+	public function toJson(): string {
 		return $this->response->getBody()->getContents();
 	}
 
 	/**
 	 * {@inheritDoc}
 	 */
-	public function getHeaders() {
+	public function getHeaders(): array {
 		$headers = [];
 
 		foreach ($this->allowedHeaders as $header) {
@@ -58,7 +58,7 @@ class Response implements ResponseInterface {
 	/**
 	 * {@inheritDoc}
 	 */
-	public function getHeader(string $name) {
+	public function getHeader(string $name): array {
 		$allowedHeaders = array_map('preg_quote', $this->allowedHeaders);
 		$regexp = '#^(?:' . implode('|', $allowedHeaders) . ')#i';
 
@@ -72,14 +72,14 @@ class Response implements ResponseInterface {
 	/**
 	 * {@inheritDoc}
 	 */
-	public function getStatusCode() {
+	public function getStatusCode(): int {
 		return $this->response->getStatusCode();
 	}
 
 	/**
 	 * {@inheritDoc}
 	 */
-	public function totalPages() {
+	public function totalPages(): ?int {
 		$total = $this->getHeader('Total');
 
 		if (empty($total)) {
@@ -95,7 +95,7 @@ class Response implements ResponseInterface {
 	/**
 	 * {@inheritDoc}
 	 */
-	public function perPage() {
+	public function perPage(): ?int {
 		$perPage = $this->getHeader('Per-Page');
 
 		if (empty($perPage)) {

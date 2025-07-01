@@ -11,6 +11,7 @@
 namespace AlfredoRamos\Mailrelay\Http;
 
 use AlfredoRamos\Mailrelay\Http\Client as HttpClient;
+use Psr\Http\Message\ResponseInterface;
 
 class Request implements RequestInterface {
 	/** @var \AlfredoRamos\Mailrelay\Http\Client */
@@ -68,11 +69,11 @@ class Request implements RequestInterface {
 	/**
 	 * {@inheritDoc}
 	 */
-	public function raw(string $url = '', array $parameters = [], string $method = 'GET') {
+	public function raw(string $url = '', array $parameters = [], string $method = 'GET'): ?ResponseInterface {
 		$method = trim(strtoupper($method));
 
 		if (empty($method) || !in_array($method, RequestInterface::ALLOWED_METHODS, true)) {
-			return;
+			return null;
 		}
 
 		return $this->httpClient->sendRequest($url, $parameters, $method);

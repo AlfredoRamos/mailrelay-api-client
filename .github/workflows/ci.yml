@@ -13,7 +13,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        php-version: ['7.2', '7.3', '7.4', '8.0', '8.1', '8.2', '8.3', '8.4']
+        php-version: ['8.1', '8.2', '8.3', '8.4']
     steps:
       - name: Checkout sources
         uses: actions/checkout@v4
@@ -40,16 +40,10 @@ jobs:
       - name: Install dependencies
         run: composer update -n --prefer-dist --no-progress
 
-      - name: Run tests (legacy)
-        if: ${{ (startsWith(matrix.php-version, '7.') || startsWith(matrix.php-version, '8.0')) && success() }}
-        run: vendor/bin/phpunit --configuration ./legacy.phpunit.xml.dist
-
       - name: Run tests
-        if: ${{ (startsWith(matrix.php-version, '8.') && !startsWith(matrix.php-version, '8.0')) && success() }}
         run: vendor/bin/phpunit --do-not-fail-on-deprecation --do-not-fail-on-phpunit-deprecation --do-not-fail-on-phpunit-warning
 
 #      - name: Send code coverage
-#        if: ${{ startsWith(matrix.php-version, '8.1') && success() }}
 #        continue-on-error: true
 #        uses: codacy/codacy-coverage-reporter-action@v1
 #        with:

@@ -71,16 +71,8 @@ class Error {
 			return $response;
 		}
 
-		$encodeFlags = JSON_INVALID_UTF8_SUBSTITUTE | JSON_PRESERVE_ZERO_FRACTION;
-		$decodeFlags = JSON_INVALID_UTF8_SUBSTITUTE;
-
-		if (version_compare(PHP_VERSION, '7.3.0', '>=')) {
-			$encodeFlags |= JSON_THROW_ON_ERROR;
-			$decodeFlags |= JSON_THROW_ON_ERROR;
-		}
-
 		$body = (string) $response->getBody();
-		$responseBody = json_decode($body, true, 512, $decodeFlags);
+		$responseBody = json_decode($body, true, 512, JSON_INVALID_UTF8_SUBSTITUTE | JSON_THROW_ON_ERROR);
 		$errorList = [];
 
 		if (is_array($responseBody)) {
@@ -95,7 +87,7 @@ class Error {
 			if (!empty($errorList['error']) && empty($errorList['errors'])) {
 				$errorList = implode(PHP_EOL, $errorList);
 			} else if (!empty($errorList['errors'])) {
-				$errorList = json_encode($errorList, $encodeFlags);
+				$errorList = json_encode($errorList, JSON_INVALID_UTF8_SUBSTITUTE | JSON_PRESERVE_ZERO_FRACTION | JSON_THROW_ON_ERROR);
 			}
 
 			$message = sprintf(

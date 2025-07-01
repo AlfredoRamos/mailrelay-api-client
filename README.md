@@ -11,14 +11,14 @@ A [Mailrelay](https://mailrelay.com) API client.
 
 ### Requirements
 
-- PHP 7.2.5 or greater
+- PHP 8.1.0 or greater
 
 ### Installation
 
 Open your `composer.json` file and add the package in the `require` object:
 
 ```json
-"alfredo-ramos/mailrelay-api-client": "^0.2.0"
+"alfredo-ramos/mailrelay-api-client": "^0.3.0"
 ```
 
 Then run `composer update` on your terminal.

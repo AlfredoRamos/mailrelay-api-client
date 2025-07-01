@@ -19,11 +19,11 @@
 		}
 	],
 	"require": {
-		"php": "^7.2.5 || ^8.0.0",
-		"guzzlehttp/guzzle": "^7.2.0"
+		"php": "^8.1.0",
+		"guzzlehttp/guzzle": "^7.9.3"
 	},
 	"require-dev": {
-		"phpunit/phpunit": "^8.5.42 || ^9.6.23 || ^10.5.47 || ^11.5.25 || ^12.2.25"
+		"phpunit/phpunit": "^10.5.47 || ^11.5.25 || ^12.2.25"
 	},
 	"autoload": {
 		"psr-4": {

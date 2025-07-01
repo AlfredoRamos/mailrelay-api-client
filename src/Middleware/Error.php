@@ -10,6 +10,7 @@
 
 namespace AlfredoRamos\Mailrelay\Middleware;
 
+use PHPUnit\Runner\Version;
 use Psr\Http\Message\RequestInterface;
 use Psr\Http\Message\ResponseInterface;
 
@@ -70,22 +71,42 @@ class Error {
 			return $response;
 		}
 
-		$body = (string) $response->getBody();
-		$responseBody = json_decode($body, true);
+		$encodeFlags = JSON_INVALID_UTF8_SUBSTITUTE | JSON_PRESERVE_ZERO_FRACTION;
+		$decodeFlags = JSON_INVALID_UTF8_SUBSTITUTE;
 
-		if (json_last_error() !== JSON_ERROR_NONE) {
-			$responseBody = $body;
+		if (version_compare(PHP_VERSION, '7.3.0', '>=')) {
+			$encodeFlags |= JSON_THROW_ON_ERROR;
+			$decodeFlags |= JSON_THROW_ON_ERROR;
 		}
 
-		if (is_array($responseBody) && !empty($responseBody['error'])) {
+		$body = (string) $response->getBody();
+		$responseBody = json_decode($body, true, 512, $decodeFlags);
+		$errorList = [];
+
+		if (is_array($responseBody)) {
+			if (!empty($responseBody['error'])) {
+				$errorList['error'] = $responseBody['error'];
+			}
+
+			if (!empty($responseBody['errors']) && is_array($responseBody['errors'])) {
+				$errorList['errors'] = $responseBody['errors'];
+			}
+
+			if (!empty($errorList['error']) && empty($errorList['errors'])) {
+				$errorList = implode(PHP_EOL, $errorList);
+			} else if (!empty($errorList['errors'])) {
+				$errorList = json_encode($errorList, $encodeFlags);
+			}
+
 			$message = sprintf(
 				'[%d] Mailrelay API request failed: %2$s',
 				$response->getStatusCode(),
-				$responseBody['error']
+				$errorList
 			);
+
 			throw new \ErrorException($message, $response->getStatusCode());
 		}
 
-		throw new \RuntimeException($responseBody, $response->getStatusCode());
+		throw new \RuntimeException($body, $response->getStatusCode());
 	}
 }
